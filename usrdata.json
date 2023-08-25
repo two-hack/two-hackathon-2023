@@ -6,7 +6,10 @@
             "gender": "Male",
             "interests": "Rock Climbing",
             "age": 19,
-            "personality": "Cheerful"
+            "personality": "Cheerful",
+            "mistakes": "Grammatical errors",
+            "past_conversation": "None",
+            "behaviours": "Complete beginner"
         },
         "language_proficiency":{
             "vocabulary": 1,

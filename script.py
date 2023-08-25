@@ -38,14 +38,14 @@ import userinfo
 
 CONV = []
 
+
 def make_initial_prompt():
-    LANGUAGE = "Chinese" # the one to learn
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details()
-    user_proficiency = userinfo.get_user_language_proficiency()
+    personal_info = userinfo.get_user_personal_details("usrdata.json")
+    user_proficiency = userinfo.get_user_language_proficiency("usrdata.json")
 
     f = open("security.txt")
-    SECURITY = f.read().format(LANGUAGE)
+    SECURITY = f.read().format(**personal_info)
     f.close()
 
     f = open("criterion.txt")
@@ -53,17 +53,14 @@ def make_initial_prompt():
     f.close()
 
     f = open("personal.txt")
-    PERSONAL = f.read().format(1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+    PERSONAL = f.read().format(**personal_info, **user_proficiency)
     f.close()
 
     f = open("convo.txt")
     CONVO = f.read()
     f.close()
 
-    f = open("final_prompt.txt")
-    FINAL = f.read()
-    f.close()
-    return (SECURITY, CRITERION, PERSONAL, CONV, FINAL)
+    return (SECURITY, CRITERION, PERSONAL, CONVO)
 
 
 def chat_with_gpt(prompt):
@@ -96,13 +93,17 @@ def chat_with_gpt(prompt):
     return assistant_reply
 
 def init():
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
+    SECURITY, CRITERION, PERSONAL, CONVO= make_initial_prompt()
     chat_with_gpt(SECURITY)
     chat_with_gpt(CRITERION)
     chat_with_gpt(PERSONAL)
     print(chat_with_gpt(CONVO))
 
 def end():
+    
+    f = open("final_prompt.txt")
+    FINAL = f.read()
+    f.close()
     print(chat_with_gpt(FINAL))
 
 if __name__ == "__main__":

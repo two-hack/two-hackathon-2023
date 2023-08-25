@@ -1,4 +1,5 @@
 import json
+json_file_path = "usrdata.json"
 
 def get_user_personal_details(json_file_path):
     with open(json_file_path, 'r') as json_file:
@@ -11,6 +12,9 @@ def get_user_personal_details(json_file_path):
         interests = personal_info["interests"]
         age = personal_info["age"]
         personality = personal_info["personality"]
+        behaviour = personal_info["behaviours"]
+        mistakes = personal_info["mistakes"]
+        past_conversation = personal_info["past_conversation"]
         
         user_details = {
             "language_choice": language_choice,
@@ -18,7 +22,10 @@ def get_user_personal_details(json_file_path):
             "gender": gender,
             "interests": interests,
             "age": age,
-            "personality": personality
+            "personality": personality,
+            "behaviour": behaviour,
+            "mistakes": mistakes,
+            "past_conversation": past_conversation
         }
         
         return user_details
@@ -41,5 +48,3 @@ def get_user_language_proficiency(json_file_path):
 
 # Replace 'your_json_file.json' with the actual path to your JSON file
 json_file_path = "usrdata.json"
-user_details = get_user_personal_details(json_file_path)
-print(user_details)
