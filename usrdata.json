@@ -1,8 +1,19 @@
 {
     "user_information": {
         "personal_information": {
-            "name":"Brian",
-            ""
+            "language_choice": "japanese",
+            "name": "Brian",
+            "gender": "Male",
+            "interests": "Rock Climbing",
+            "age": 19,
+            "personality": "Cheerful"
+        },
+        "language_proficiency":{
+            "vocabulary": 1,
+            "grammar": 1,
+            "social and cultural context": 1,
+            "comprehension": 1,
+            "conversational skills": 1
         }
     }
 }
