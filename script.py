@@ -1,8 +1,41 @@
+# import requests
+
+# def chat_with_gpt(prompt):
+#     url = "https://api.openai.com/v1/chat/completions"
+#     headers = {
+#         "Content-Type": "application/json",
+#         "Authorization": "Bearer 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"  # Replace with your actual API key
+#     }
+#     data = {
+#         "messages": [
+#             {"role": "system", "content": "You are a helpful assistant."},
+#             {"role": "user", "content": prompt}
+#         ]
+#     }
+
+#     response = requests.post(url, headers=headers, json=data)
+#     response_json = response.json()
+#     assistant_reply = response_json["choices"][0]["message"]["content"]
+    
+#     return assistant_reply
+
+# if __name__ == "__main__":
+#     print("Welcome to the ChatGPT Conversation!")
+#     while True:
+#         user_input = input("You: ")
+#         if user_input.lower() == "exit":
+#             print("Goodbye!")
+#             break
+#         assistant_response = chat_with_gpt(user_input)
+#         print("Assistant:", assistant_response)
+
+
 
 import requests
 
 CONV = []
 
+<<<<<<< HEAD
 
 #INITIALISATION PROMPTS
 setup = """
@@ -69,23 +102,31 @@ Word, Definition, Translation, Example_Sentence.
 
 After that start with a question that could spark an interesting conversation.
 """.format("Chinese",1,1,1,1,1,"Tony","Male", "Programming, Guitar", 18, "Talkative")
+=======
+LANGUAGE = "Chinese" # the one to learn
+# PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+>>>>>>> 64c9bfe3909a484e4371966cc39ccd3508708e92
 
 
-saveData = """
-Based on the criteria that was given on the first prompt rate the performance of this user from 1 to 100 in the following format: Criteria, rating
+f = open("security.txt")
+SECURITY = f.read().format(LANGUAGE)
+f.close()
 
-Write thing to note about this users behaviours that might help the next conversation be more interesting and educative in a few sentences.
+f = open("criterion.txt")
+CRITERION = f.read()
+f.close()
 
-Write about how the users personality presented on this conversation and use the personality from the first prompt to update the personality field, describe it in 10 words.
+f = open("personal.txt")
+PERSONAL = f.read().format(1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+f.close()
 
-Give some feedback to the user that will encourage them to keep learning while also outlining ways they can improve in each criteria and in general.
+f = open("convo.txt")
+CONVO = f.read()
+f.close()
 
-Write some common mistakes in the language that this user has.
-
-Summarise in less than 15 words the topics of conversation.
-
-Write all of these separated by newlines and no text or answers other that was specified.
-"""
+f = open("final_prompt.txt")
+FINAL = f.read()
+f.close()
 
 
 def chat_with_gpt(prompt):
@@ -96,7 +137,7 @@ def chat_with_gpt(prompt):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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"  # Replace with your actual API key
+        "Authorization": "Bearer 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"  # Replace with your actual API key
     }
     data = {
         "messages": CONV,
@@ -115,17 +156,16 @@ def chat_with_gpt(prompt):
     #CONV.append(response_json["message"][-1])
     CONV.append({"role": "assistant", "content": assistant_reply})
 
-
     return assistant_reply
 
 def init():
-    print(chat_with_gpt(setup))
-
+    chat_with_gpt(SECURITY)
+    chat_with_gpt(CRITERION)
+    chat_with_gpt(PERSONAL)
+    print(chat_with_gpt(CONVO))
 
 def end():
-    print(chat_with_gpt(saveData))
-
-
+    print(chat_with_gpt(FINAL))
 
 if __name__ == "__main__":
     print("Welcome to the language app!")
