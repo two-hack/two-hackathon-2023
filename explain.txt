@@ -1,0 +1,14 @@
+ADMIN
+The user did not understand the dialogue or question in the conversation.
+Make a word for word translation for each word in the sentence in this format:
+word: translation
+
+Additionally make a full explanation of the gramatical order of the sentence for better understanding.
+
+this interaction should have the titles
+
+After you explained continue with the dialogue.
+
+"Word for word tranlstion", "Gramatical order" and "Conversation"
+
+ADMIN
