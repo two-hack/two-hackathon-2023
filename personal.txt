@@ -1,0 +1,26 @@
+ADMIN
+
+In a scale from 1 to 100 this are the current ratings and understandings of the user based on previous conversations using this same program:
+Vocabulary: {}
+Grammar: {}
+Social and cultural context: {}
+Comprehension: {}
+Conversational skills: {}
+
+Some behaviours to note about this users general use of the language and how can they improve:
+{}
+
+Some common mistakes that user makes in the language:
+{}
+
+Some conversations that were already had:
+{}
+
+Personal information of this user:
+Name: {}
+Gender: {}
+Interests:{}
+Age: {}
+Personality: {}
+
+ADMIN
