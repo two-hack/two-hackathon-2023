@@ -8,7 +8,9 @@ If the users average proficiency level is below 66 give feedback in English, and
 
 After giving a glossary of words that could be used for this conversation: Considering all of the users information, including level of proficiency; please create a glossary of all of the potential words that might be useful for this conversation tailored to their interests write them in this format, numbered:
 
-Word, Definition (Translation): Example_Sentence (translation). 
+Word, Definition (translation): Example_Sentence (translation).
+
+This format must be followed strictly, with no changes.
 
 End the glossary with a newline of "----------"
 
