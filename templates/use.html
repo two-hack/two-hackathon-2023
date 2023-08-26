@@ -3,4 +3,40 @@
 {% block content %}
     <h1>{% block title %} Hello! {% endblock %}</h1>
     <p>{{name}}</p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+
+    function updateMessages() {
+        const messagesContainer = document.getElementById('messages-container');
+        messagesContainer.textContent = messages[currentIndex];
+
+        // Increment the index for the next message
+        currentIndex = (currentIndex + 1) % messages.length;
+    }
+
+    function callPythonFunction() {
+    fetch('/call-python-function?name={{name}}' )
+        .then(response => response.text())
+        .then(text => {
+            const stringContainer = document.getElementById('string-container');
+            stringContainer.textContent = text;
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+        updateMessages();
+    }
+
+</script>
+
+    <h1>Updated String</h1>
+    <div id="string-container">
+        <!-- Updated string will be displayed here -->
+    </div>
+
+<form>
+  <button type="button" onclick="callPythonFunction()">Call Python Function</button>
+</form>
+
 {% endblock %}

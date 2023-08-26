@@ -17,6 +17,14 @@
         margin: 0;
     }
 
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        margin-bottom: 15px;
+    }
+
     nav {
       display: flex;
       justify-content: center;
@@ -139,3 +147,4 @@
     input[type=submit]:hover {
         background-color: #45a049;
     }
+
