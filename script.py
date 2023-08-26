@@ -11,9 +11,10 @@ SECRET_KEYWORD = "ADMIN"
 
 ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
 
-USER_ID = 500
-FILENAME = str(USER_ID) + ".pkl"
-<<<<<<< HEAD
+SECRET_KEYWORD = "ADMIN"
+
+ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
+
 #USR_JSONPATH = "usrdata.json"
 
 =======
