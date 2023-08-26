@@ -100,11 +100,6 @@ class PersonalInfo:
 
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 3039903 (overwriting data to json working)
 
 
 
@@ -178,16 +173,7 @@ class LanguageProficiency:
         }
         with open(json_file_path, 'r') as json_file:
             data = json.load(json_file)
-<<<<<<< HEAD
-<<<<<<< HEAD
             data["user_information"]["language_proficiency"].update(newdata)
-=======
-            data["user information"]["language_proficiency"].update(newdata)
->>>>>>> 97ccff0 (working version)
-=======
-            data["user_information"]["language_proficiency"].update(newdata)
->>>>>>> 3039903 (overwriting data to json working)
-
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)
 

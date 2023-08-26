@@ -1,26 +1,24 @@
 import re
 import requests
+from key import KEY
 import userinfo
 import matplotlib.pyplot as plt
 import datetime
 import pickle
 import os
-from key import KEY # local file
 
 SECRET_KEYWORD = "ADMIN"
-
 ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
-
-SECRET_KEYWORD = "ADMIN"
-
-ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
+PROMPT_FOLDER = "src/prompts/"
 
 #USR_JSONPATH = "usrdata.json"
 
-=======
->>>>>>> 4d63a20 (added conversation history, and other misc updates)
-PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
-PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
+def get_picklefile(username):
+    return "users/" + username + "/data.pkl"
+
+def make_conversation_file(username):
+    path_to_user_folder = "users/" + str(username)
+    path_to_user_history = path_to_user_folder + "/history"
 
     if not os.path.exists(path_to_user_folder):
         os.makedirs(path_to_user_folder)
@@ -115,24 +113,24 @@ def dump_personal_summary(text, json_filepath):
         mistakes=mistakes,
         past_conversation=past_conversation)
 
-def make_initial_prompt(path_to_json):
+def make_initial_prompt(usr_jsonpath):
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details(path_to_json)
-    user_proficiency = userinfo.get_user_language_proficiency(path_to_json)
+    personal_info = userinfo.get_user_personal_details(usr_jsonpath)
+    user_proficiency = userinfo.get_user_language_proficiency(usr_jsonpath)
 
-    f = open("security.txt")
+    f = open(PROMPT_FOLDER + "security.txt")
     SECURITY = f.read().format(**personal_info)
     f.close()
 
-    f = open("criterion.txt")
+    f = open(PROMPT_FOLDER + "criterion.txt")
     CRITERION = f.read()
     f.close()
 
-    f = open("personal.txt")
+    f = open(PROMPT_FOLDER + "personal.txt")
     PERSONAL = f.read().format(**personal_info, **user_proficiency)
     f.close()
 
-    f = open("convo.txt")
+    f = open(PROMPT_FOLDER + "convo.txt")
     CONVO = f.read()
     f.close()
 
@@ -140,18 +138,7 @@ def make_initial_prompt(path_to_json):
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
-<<<<<<< HEAD
-    """
-        handles the reqestion to openai
 
-        perms: prompt: the message user typed in
-        perms: recordPrompt: whether to record the prompt in the conversation history
-        perms: recordReply: whether to record the reply in the conversation history
-    """
-
-=======
-
->>>>>>> 4d63a20 (added conversation history, and other misc updates)
     global CONV, conv_for_history
 
     CONV.append({"role": "user", "content": prompt})
@@ -176,7 +163,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     response = requests.post(url, headers=headers, json=data)
     response_json = response.json()
 
-    print(response_json)
+    # print(response_json)
 
 
     # The structure of the response might have changed
@@ -186,41 +173,26 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     CONV.append({"role": "assistant", "content": assistant_reply})
     if recordReply:
         conv_for_history += (assistant_reply + "\n")
-<<<<<<< HEAD
 
 
     return assistant_reply
 
-def init(usr_jsonpath = "usrdata.json"):
-
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(path_to_json=usr_jsonpath)
-=======
-
-
-    return assistant_reply
-
-def init(usr_jsonpath):
-
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
->>>>>>> 4d63a20 (added conversation history, and other misc updates)
+def init(username):
+    usr_jsonpath = os.path.normpath(f"users/{username}/usrdata.json")
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
     chat_with_gpt(PERSONAL, False, False)
     initial_text = chat_with_gpt(CONVO, False, True)
     print(initial_text)
-<<<<<<< HEAD
     return initial_text
 
-def end(lastInput, usr_jsonpath):
+def end(lastInput, username) -> str:
     global FINAL
+    usr_jsonpath = os.path.normpath(f"users/{username}/usrdata.json")
+    datastorage = get_pickled_data(username)
 
-=======
-
-def end(lastInput, usr_jsonpath):
-    global FINAL
-
->>>>>>> 4d63a20 (added conversation history, and other misc updates)
-    f = open("final_prompt.txt")
+    f = open(PROMPT_FOLDER + "final_prompt.txt")
     FINAL = f.read()
     f.close()
     summary = chat_with_gpt(FINAL)
@@ -253,21 +225,6 @@ def end(lastInput, usr_jsonpath):
     updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
     updated_stats.dump_to_json(usr_jsonpath)
     datastorage.add_entry(timestamp, stats)
-
-    try:
-        BEHAVIOUR = lines[5]
-    except:
-        BEHAVIOUR = ""
-
-    try:
-        PERSONALITY = lines[6]
-    except:
-        PERSONALITY = ""
-
-    try:
-        MISTAKES = lines[8]
-    except:
-        MISTAKES = ""
 
     if lastInput == "graph":
 
@@ -305,14 +262,15 @@ def end(lastInput, usr_jsonpath):
         plt.xticks(rotation=45)
         plt.tight_layout()
 
-        # print(graph)
 
 
         plt.savefig("User {}s Progress.png".format(username))
 
         # print(graph)
 
-    datastorage.save_data(FILENAME)
+    datastorage.save_data(get_picklefile(username=username))
+
+    return summary
 
 
 if __name__ == "__main__":
@@ -323,7 +281,7 @@ if __name__ == "__main__":
 
         user_input = input("You: ")
         if user_input.lower() == "explain":
-            f = open("explain.txt")
+            f = open(PROMPT_FOLDER + "explain.txt")
             EXPLAIN = f.read()
             f.close()
             user_input = EXPLAIN
@@ -338,16 +296,3 @@ if __name__ == "__main__":
         print("Assistant:", assistant_response)
 
     end(user_input.lower())
-
-    with open(PATH_TO_NEW_CONVERSATION, "w") as f:
-        f.write(conv_for_history)
-<<<<<<< HEAD
-
-
-=======
-
-
->>>>>>> 4d63a20 (added conversation history, and other misc updates)
-
-
-

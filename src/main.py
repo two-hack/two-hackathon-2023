@@ -3,6 +3,9 @@ import re
 import json
 
 def user_exists(name):
+    if not os.path.isdir("users"):
+        os.mkdir("users")
+
     return os.path.isdir("users/" + name)
 
 def make_new_user(form_input: dict[str, str]):

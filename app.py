@@ -69,7 +69,7 @@ def handle_prompt():
     prompt = request.args["data"]
 
     if prompt == "END":
-        return backend.end("End conversation", "users/" + request.args['name'] + "/usrdata.json")
+        return main.parse_respone(backend.end("End conversation", request.args['name']))
 
     print(f"sending prompt: {prompt}")
     respone = backend.chat_with_gpt(prompt)
@@ -83,7 +83,7 @@ def call_back_innit():
     name = request.args['name']
 
     print(f"sending innit")
-    respone = backend.init("users/" + name + "/usrdata.json")
+    respone = backend.init(name)
     return main.parse_respone(respone)
 
 
