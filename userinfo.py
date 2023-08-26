@@ -225,5 +225,3 @@ def get_user_language_proficiency(json_file_path):
         
         return user_language_proficiency
 
-# Replace 'your_json_file.json' with the actual path to your JSON file
-json_file_path = "usrdata.json"
