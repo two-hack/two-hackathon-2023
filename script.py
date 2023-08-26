@@ -97,10 +97,12 @@ def chat_with_gpt(prompt):
     return assistant_reply
 
 def init():
+    SECURITY, CRITERION, PERSONAL, CONVO= make_initial_prompt()
     chat_with_gpt(SECURITY)
     chat_with_gpt(CRITERION)
     chat_with_gpt(PERSONAL)
-    print(chat_with_gpt(CONVO))
+    initial_text = chat_with_gpt(CONVO)
+    print(initial_text)
 
 def end(lastInput):
     summary = chat_with_gpt(FINAL)
@@ -129,6 +131,7 @@ def end(lastInput):
     time = str(datetime.datetime.now().time().replace(microsecond=0))
     timestamp = date + " " + time
 
+    updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
     datastorage.add_entry(timestamp, stats)
 
     try:

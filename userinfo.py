@@ -23,6 +23,33 @@ class PersonalInfo:
         self.past_conversation = past_conversation,
         self.behaviours = behaviours
 
+    def get_language(self):
+        return str(self.language)
+
+    def get_name(self):
+        return str(self.name)
+
+    def get_gender(self):
+        return str(self.gender)
+
+    def get_interests(self):
+        return ', '.join(str(i) for i in self.interests)
+
+    def get_age(self):
+        return str(self.age)
+
+    def get_personality(self):
+        return str(self.personality)
+
+    def get_mistakes(self):
+        return str(self.mistakes)
+
+    def get_past_conversation(self):
+        return str(self.past_conversation)
+
+    def get_behaviours(self):
+        return str(self.behaviours)
+        
     def set_language(self, language):
         self.language = str(language)
 
@@ -55,6 +82,8 @@ class PersonalInfo:
 
     def set_behaviours(self, behaviours):
         self.behaviours = str(behaviours)
+    
+
     
 class LanguageProficiency:
     def __init__(
@@ -115,6 +144,23 @@ class LanguageProficiency:
             self.conversation_skills = conversation_skills
         else:
             self.conversation_skills = None
+
+    def dump_to_json(self, json_file_path):
+        newdata = {
+            "vocabulary": self.vocabulary,
+            "grammar": self.grammar,
+            "social and cultural context": self.social_cultural_context,
+            "comprehension": self.comprehension,
+            "conversational skills": self.conversation_skills
+        }
+        with open(json_file_path, 'r') as json_file:
+            data = json.load(json_file)
+            data["user information"]["language_proficiency"].update(newdata)
+
+        with open(json_file_path, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
+            
+
     
 def get_user_personal_details(json_file_path):
     with open(json_file_path, 'r') as json_file:
