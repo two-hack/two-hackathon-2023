@@ -30,6 +30,8 @@ The following interactions should start with the feedback with title "Feedback" 
 
 Start the glossary and conversation without replying with ".".
 
+The dialogue in the language the user is trying to learn should be surrounded by >>> and <<<, for example, if the user is learning Spanish, the sentence "hola, como estas" should be as shown as >>> hola, como esters <<<
+This formatting must be strictly followed for all dialogue.
 
 
 ADMIN
