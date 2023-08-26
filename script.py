@@ -10,6 +10,7 @@ from key import KEY # local file
 
 USER_ID = 500
 FILENAME = str(USER_ID) + ".pkl"
+USR_JSONPATH = "usrdata.json"
 
 class DataStorage:
     def __init__(self):
@@ -94,8 +95,8 @@ def dump_personal_summary(text, json_filepath):
 
 def make_initial_prompt():
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details("usrdata.json")
-    user_proficiency = userinfo.get_user_language_proficiency("usrdata.json")
+    personal_info = userinfo.get_user_personal_details(USR_JSONPATH)
+    user_proficiency = userinfo.get_user_language_proficiency(USR_JSONPATH)
 
     f = open("security.txt")
     SECURITY = f.read().format(**personal_info)
@@ -183,9 +184,9 @@ def end(lastInput):
     time = str(datetime.datetime.now().time().replace(microsecond=0))
     timestamp = date + " " + time
     
-    dump_personal_summary(summary, "usrdata.json")
+    dump_personal_summary(summary, USR_JSONPATH)
     updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
-    updated_stats.dump_to_json("usrdata.json")
+    updated_stats.dump_to_json(USR_JSONPATH)
     datastorage.add_entry(timestamp, stats)
     
     try:
