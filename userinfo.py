@@ -49,7 +49,7 @@ class PersonalInfo:
 
     def get_behaviours(self):
         return str(self.behaviours)
-        
+
     def set_language(self, language):
         self.language = str(language)
 
@@ -101,13 +101,13 @@ class PersonalInfo:
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)
 <<<<<<< HEAD
-    
+
 
 =======
 >>>>>>> 3039903 (overwriting data to json working)
-    
 
-    
+
+
 class LanguageProficiency:
     def __init__(
         self,
@@ -190,13 +190,13 @@ class LanguageProficiency:
 
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)
-            
 
-    
+
+
 def get_user_personal_details(json_file_path):
     with open(json_file_path, 'r') as json_file:
         data = json.load(json_file)
-        
+
         personal_info = data["user_information"]["personal_information"]
         language_choice = personal_info["language_choice"]
         name = personal_info["name"]
@@ -207,7 +207,7 @@ def get_user_personal_details(json_file_path):
         behaviour = personal_info["behaviours"]
         mistakes = personal_info["mistakes"]
         past_conversation = personal_info["past_conversation"]
-        
+
         user_details = {
             "language_choice": language_choice,
             "name": name,
@@ -219,15 +219,15 @@ def get_user_personal_details(json_file_path):
             "mistakes": mistakes,
             "past_conversation": past_conversation
         }
-        
+
         return user_details
-    
+
 def get_user_language_proficiency(json_file_path):
     with open(json_file_path, 'r') as json_file:
         data = json.load(json_file)
-        
+
         language_proficiency = data["user_information"]["language_proficiency"]
-        
+
         user_language_proficiency = {
             "vocabulary": language_proficiency["vocabulary"],
             "grammar": language_proficiency["grammar"],
@@ -235,6 +235,6 @@ def get_user_language_proficiency(json_file_path):
             "comprehension": language_proficiency["comprehension"],
             "conversational skills": language_proficiency["conversational skills"]
         }
-        
+
         return user_language_proficiency
 
