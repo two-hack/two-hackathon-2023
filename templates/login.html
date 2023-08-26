@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome back {% endblock %}</h1>
+    <form method="post">
+        <label for="title">Whats your name:</label>
+        <br>
+        <input type="text" name="name"
+               placeholder="Enter your name"
+               value="{{ request.form['name'] }}"></input>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+{% endblock %}

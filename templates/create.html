@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} Sign up {% endblock %}
+{% block header %} Create your profile! {% endblock %}
+{% block content %}
+    <form method="post">
+        <label for="title">Whats your name:</label>
+        <br>
+
+        <input type="text" name="name" required
+               placeholder="Enter your name"
+               value="{{ request.form['name'] }}"></input>
+        <br>
+        <label for="lang">What lanage do you want to learn:</label>
+        <br>
+
+        <input type="text" name="lang" required
+               placeholder="language"
+               value="{{ request.form['lang'] }}"></input>
+
+        <br>
+        <label for="level">On scale of 1-10, 1 being bed, 10 begin good, how good are you?</label>
+        <br>
+
+        <input type="number" name="level" required
+               min="1" max="100"
+               placeholder="0"
+               value="{{ request.form['level'] }}"></input>
+
+        <label>Gender:</label>
+        <input type="color" name="gender" required
+                value="{{request.form['gender']}}"></input>
+
+        <br>
+        <br>
+
+        <label>age (optional)<label>
+        <input type="number" name="age"
+                value="{{request.form['age']}}"></input>
+
+        <label >interests (sparete by line): </label>
+
+        <textarea name="interests">
+        </textarea>
+
+        <br>
+        <input type="submit">
+    </form>
+{% endblock %}
