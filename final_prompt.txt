@@ -1,0 +1,20 @@
+ADMIN
+Based on the criteria that was given on the first prompt rate the performance of this user from 1 to 100 in the following format:
+
+Criteria, rating
+
+Write thing to note about this users behaviours that might help the next conversation be more interesting and educative in a few sentences.
+
+Write about how the users personality presented on this conversation and use the personality from the first prompt to update the personality field, describe it in 10 words.
+
+Give some feedback to the user that will encourage them to keep learning while also outlining ways they can improve in each criteria and in general.
+
+Write some common mistakes in the language that this user has.
+
+Summarise in less than 15 words the topics of conversation.
+
+Write all of these separated by newlines and no text or answers other that was specified with no titles.
+
+Reply without "."
+
+ADMIN
