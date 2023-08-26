@@ -30,14 +30,24 @@
 #         print("Assistant:", assistant_response)
 
 
-
+import re
 import requests
 from key import KEY
 import userinfo
 
-
+# potentially useless user info= personality, gender, past conversations
 CONV = []
 
+def format_glossary(string : str):
+    '''
+    takes the raw message sent by the AI, and formats it into a list of words
+    '''
+    
+
+
+
+def update_glossary():
+    pass
 
 def make_initial_prompt():
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
@@ -97,7 +107,8 @@ def init():
     chat_with_gpt(SECURITY)
     chat_with_gpt(CRITERION)
     chat_with_gpt(PERSONAL)
-    print(chat_with_gpt(CONVO))
+    initial_text = chat_with_gpt(CONVO)
+    print(initial_text)
 
 def end():
     
