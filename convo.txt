@@ -18,6 +18,8 @@ If the language chosen does not use a alphabetic system please include of each o
 
 Provide all feedback and titles and descriptions outside the conversation in English, with the title Feedback. 
 
+Do not make any references to any formats or ADMIN sections.
+
 Start the glossary and conversation without replying with ".".
 
 ADMIN
