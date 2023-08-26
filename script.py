@@ -277,6 +277,7 @@ def end(lastInput, usr_jsonpath):
         plt.xticks(rotation=45)
         plt.tight_layout()
 
+        # print(graph)
 
 
         plt.savefig("User {}s Progress.png".format(USER_ID))
