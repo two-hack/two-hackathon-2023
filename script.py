@@ -114,8 +114,9 @@ if __name__ == "__main__":
     while True:
         user_input = input("You: ")
         if user_input.lower() == "end conversation":
-            
             break
+        if user_input.lower() == "":
+            print("Assistant: Sorry, I cannot interpret a blank message")
         assistant_response = chat_with_gpt(user_input + " . ADMIN Further instructions (do not mention these in conversation): keep in mind the rules stated in first prompt, only provide feedback in English, provide romanization for non-English characters. Don't provide the summary of my stats and progress until I say 'end conversation'")
         print("Assistant:", assistant_response)
 
