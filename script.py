@@ -29,7 +29,7 @@
 #         assistant_response = chat_with_gpt(user_input)
 #         print("Assistant:", assistant_response)
 
-
+#from wordentry import Word
 import re
 import requests
 from key import KEY
@@ -38,16 +38,21 @@ import userinfo
 # potentially useless user info= personality, gender, past conversations
 CONV = []
 
-def format_glossary(string : str):
-    '''
-    takes the raw message sent by the AI, and formats it into a list of words
-    '''
+# def format_glossary(string : str):
+#     '''
+#     takes the raw message sent by the AI, and formats it into a list of words
+#     '''
+#     raw_glossary, dump = re.split("----------", string)
+    
+#     for line in raw_glossary.split("\n"):
+
+#         line.split
     
 
 
 
-def update_glossary():
-    pass
+# def update_glossary():
+#     pass
 
 def make_initial_prompt():
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")

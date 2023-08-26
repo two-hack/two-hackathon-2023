@@ -1,10 +1,10 @@
 {
     "user_information": {
         "personal_information": {
-            "language_choice": "japanese",
+            "language_choice": "Bahasa Indonesia",
             "name": "Brian",
             "gender": "Male",
-            "interests": "Rock Climbing",
+            "interests": ["Rock Climbing", "Skateboard", "Mathematics"],
             "age": 19,
             "personality": "Cheerful",
             "mistakes": "Grammatical errors",
