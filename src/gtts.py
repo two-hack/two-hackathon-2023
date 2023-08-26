@@ -26,7 +26,7 @@ language_voices = {
     "indonesian" : ["id-ID", "id-ID-Wavenet-D", "id-ID-Wavenet-B"],
     "italian" : ["it-IT", "it-IT-Neural2-A", "it-IT-Neural2-C"],
     "japanese" : ["ja-JP", "ja-JP-Neural2-B", "ja-JP-Neural2-D"],
-    "korea" : ["ko-KR", "ko-KR-Neural2-A", "ko-KR-Neural2-C"],
+    "korean" : ["ko-KR", "ko-KR-Neural2-A", "ko-KR-Neural2-C"],
     "mandarin" : ["cmn-CN", "cmn-CN-Wavenet-A", "cmn-CN-Wavenet-B"],
     "portugese" : ["pt-BR", "pt-BR-Neural2-A", "pt-BR-Neural2-B"],
     "punjabi" : ["pa-IN", "pa-IN-Wavenet-A", "pa-IN-Wavenet-D"],
