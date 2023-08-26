@@ -3,22 +3,30 @@
 {% block header %} Create your profile! {% endblock %}
 {% block content %}
     <form method="post">
-        <label for="title">Whats your name:</label>
+        <label for="title">What is your name?</label>
         <br>
 
         <input type="text" name="name" required
                placeholder="Enter your name"
                value="{{ request.form['name'] }}"></input>
         <br>
-        <label for="lang">What lanage do you want to learn:</label>
+        <label for="lang">What language do you want to learn?</label>
+        <button class="dropbtn">Select Language</button>
+        <div class="dropdown-content">
+            <a href="#">English</a>
+            <a href="#">Spanish</a>
+            <a href="#">French</a>
+            <a href="#">German</a>
+            <!-- Add more language options here -->
+        </div>
         <br>
 
         <input type="text" name="lang" required
-               placeholder="language"
+               placeholder="Language"
                value="{{ request.form['lang'] }}"></input>
 
         <br>
-        <label for="level">On scale of 1-10, 1 being bed, 10 begin good, how good are you?</label>
+        <label for="level">On scale of 1-10, what is your skill level?</label>
         <br>
 
         <input type="number" name="level" required
@@ -33,11 +41,11 @@
         <br>
         <br>
 
-        <label>age (optional)<label>
+        <label>Age (optional)<label>
         <input type="number" name="age"
                 value="{{request.form['age']}}"></input>
 
-        <label >interests (sparete by line): </label>
+        <label >Interests (separate by line): </label>
 
         <br>
         <textarea rows="10" cols="20" name="interests"></textarea>
