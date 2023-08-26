@@ -146,7 +146,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     """
 
 =======
-    
+
 >>>>>>> 4d63a20 (added conversation history, and other misc updates)
     global CONV, conv_for_history
 
@@ -191,11 +191,11 @@ def init(usr_jsonpath = "usrdata.json"):
 
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(path_to_json=usr_jsonpath)
 =======
-    
+
 
     return assistant_reply
 
-def init():
+def init(usr_jsonpath):
 
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
 >>>>>>> 4d63a20 (added conversation history, and other misc updates)
@@ -212,7 +212,7 @@ def end(lastInput, usr_jsonpath):
 
 =======
 
-def end(lastInput):
+def end(lastInput, usr_jsonpath):
     global FINAL
 
 >>>>>>> 4d63a20 (added conversation history, and other misc updates)
@@ -342,8 +342,8 @@ if __name__ == "__main__":
 
 
 =======
-    
-    
+
+
 >>>>>>> 4d63a20 (added conversation history, and other misc updates)
 
 
