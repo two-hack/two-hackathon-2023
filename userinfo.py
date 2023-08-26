@@ -82,6 +82,24 @@ class PersonalInfo:
 
     def set_behaviours(self, behaviours):
         self.behaviours = str(behaviours)
+
+    @staticmethod
+    def dump_to_json(json_file_path, interests, personality, mistakes, past_conversation, behaviours):
+        with open(json_file_path, 'r') as json_file:
+            data = json.load(json_file)
+            if not interests is None:
+                data["user_information"]["personal_information"]["interests"] = interests
+            if not personality is None:
+                data["user_information"]["personal_information"]["personality"] = personality
+            if not mistakes is None:
+                data["user_information"]["personal_information"]["mistakes"] = mistakes
+            if not past_conversation is None:
+                data["user_information"]["personal_information"]["past_conversation"] = past_conversation
+            if not behaviours is None:
+                data["user_information"]["personal_information"]["behaviours"] = behaviours
+
+        with open(json_file_path, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
     
 
     
@@ -155,7 +173,7 @@ class LanguageProficiency:
         }
         with open(json_file_path, 'r') as json_file:
             data = json.load(json_file)
-            data["user information"]["language_proficiency"].update(newdata)
+            data["user_information"]["language_proficiency"].update(newdata)
 
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)

@@ -39,8 +39,60 @@ if os.path.exists(FILENAME):
 # potentially useless user info= personality, gender, past conversations
 CONV = []
 
-LANGUAGE = "Chinese" # the one to learn
-# PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+
+
+# def format_glossary(string : str):
+#     '''
+#     takes the raw message sent by the AI, and formats it into a list of words
+#     '''
+#     raw_glossary, dump = re.split("----------", string)
+
+#     for line in raw_glossary.split("\n"):
+
+#         line.split
+
+
+
+
+# def update_glossary():
+#     pass
+
+def find_line_with_regex(text, regex_pattern):
+    lines = text.split('\n')
+    for line in lines:
+        if re.match(regex_pattern, line):
+            formatted_string = line.strip()
+            formatted_string.replace(regex_pattern, "").strip()
+            return formatted_string
+    return None
+
+
+def dump_personal_summary(text, json_filepath):
+    interests = find_line_with_regex(text, "Interests: ")
+    if not interests is None:
+        interests = personality.split(", ")
+    personality = find_line_with_regex(text, "Personality: ")
+    if not personality is None:
+        personality = personality.split(", ")
+    behaviour = find_line_with_regex(text, "Behaviour: ")
+    if not behaviour is None:
+        behaviour = behaviour.split(", ")
+    mistakes = find_line_with_regex(text, "Mistakes: ")
+    if not mistakes is None:
+        mistakes = mistakes.split(", ")
+    past_conversation = find_line_with_regex(text, "Conversation topics: ")
+    userinfo.PersonalInfo.dump_to_json(
+        json_file_path=json_filepath,
+        interests=interests,
+        personality=personality,
+        behaviours=behaviour,
+        mistakes=mistakes,
+        past_conversation=past_conversation)
+
+def make_initial_prompt():
+    # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+    personal_info = userinfo.get_user_personal_details("usrdata.json")
+    user_proficiency = userinfo.get_user_language_proficiency("usrdata.json")
 
 f = open("security.txt")
 SECURITY = f.read().format(LANGUAGE)
@@ -131,7 +183,9 @@ def end(lastInput):
     time = str(datetime.datetime.now().time().replace(microsecond=0))
     timestamp = date + " " + time
 
+    dump_personal_summary(summary, "usrdata.json")
     updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
+    updated_stats.dump_to_json("usrdata.json")
     datastorage.add_entry(timestamp, stats)
 
     try:
