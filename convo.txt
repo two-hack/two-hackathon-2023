@@ -20,6 +20,12 @@ Provide all feedback and titles and descriptions outside the conversation in Eng
 
 Do not make any references to any formats or ADMIN sections.
 
+The first interacion should have the titles: "Glossary" and "Conversation"
+
+The following interactions should start with the feedback with title "Feedback" and then continue with the conversation with title "Conversation".
+
 Start the glossary and conversation without replying with ".".
+
+
 
 ADMIN
