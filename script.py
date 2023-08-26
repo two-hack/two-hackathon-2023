@@ -21,14 +21,16 @@ FILENAME = str(USER_ID) + ".pkl"
 PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
 PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
 
-if not os.path.exists(PATH_TO_USER_FOLDER):
-    os.makedirs(PATH_TO_USER_FOLDER)
-if not os.path.exists(PATH_TO_USER_HISTORY):
-    os.makedirs(PATH_TO_USER_HISTORY)
-numConversations = len([f for f in os.listdir(PATH_TO_USER_HISTORY) if os.path.isfile(os.path.join(PATH_TO_USER_HISTORY, f))])
-PATH_TO_NEW_CONVERSATION = PATH_TO_USER_HISTORY + "/Conversation" + str(numConversations+1) + ".txt"
-with open(PATH_TO_NEW_CONVERSATION, "w"):
-    pass
+    if not os.path.exists(path_to_user_folder):
+        os.makedirs(path_to_user_folder)
+    if not os.path.exists(path_to_user_history):
+        os.makedirs(path_to_user_history)
+    numConversations = len([f for f in os.listdir(path_to_user_history) if os.path.isfile(os.path.join(path_to_user_history, f))])
+    path_to_new_conversation = path_to_user_history + "/Conversation" + str(numConversations+1) + ".txt"
+    with open(path_to_new_conversation, "w"):
+        pass
+    return path_to_new_conversation
+
 
 class DataStorage:
     def __init__(self):
@@ -51,10 +53,11 @@ class DataStorage:
     def getValues(self):
         return self.data.values()
 
-datastorage = DataStorage()
-
-if os.path.exists(FILENAME):
-    datastorage.load_data(FILENAME)
+def get_pickled_data(username):
+    datastorage = DataStorage()
+    if os.path.exists(get_picklefile(username)):
+        datastorage.load_data(get_picklefile(username))
+    return datastorage
 
 # graph = {}
 
@@ -296,7 +299,7 @@ def end(lastInput, usr_jsonpath):
 
         plt.xlabel("Timestamps")
         plt.ylabel("Values")
-        plt.title("User {}'s Progress".format(USER_ID))
+        plt.title("User {}'s Progress".format(username))
         plt.legend()
         plt.xticks(rotation=45)
         plt.tight_layout()
@@ -304,7 +307,7 @@ def end(lastInput, usr_jsonpath):
         # print(graph)
 
 
-        plt.savefig("User {}s Progress.png".format(USER_ID))
+        plt.savefig("User {}s Progress.png".format(username))
 
         # print(graph)
 
@@ -312,7 +315,6 @@ def end(lastInput, usr_jsonpath):
 
 
 if __name__ == "__main__":
-    print("Welcome to the language app!")
 
     init()
 
