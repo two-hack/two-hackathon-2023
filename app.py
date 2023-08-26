@@ -1,7 +1,7 @@
 import json
 from src import main
 
-TESTING = False
+TESTING = True
 if TESTING:
     from src import mock as backend
 else:
@@ -42,7 +42,7 @@ def create():
 @app.route("/login", methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['name'].lower()
         if not name:
             flash('Name is required!')
         elif main.user_exists(name):

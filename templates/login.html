@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-
+{% block title %} Sign in {% endblock %}
+{% block header %} who are you? {% endblock %}
 {% block content %}
     <form method="post">
-        <h1>{% block title %} Welcome back {% endblock %}</h1>
         <label for="title">Whats your name:</label>
         <br>
         <input type="text" name="name"
