@@ -1,39 +1,52 @@
 {% extends 'base.html' %}
+{% block title %} Learn! {% endblock %}
+{% block header %} Hello! {% endblock %}
 
 {% block content %}
-    <h1>{% block title %} Hello! {% endblock %}</h1>
     <p>{{name}}</p>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type=text/javascript>
+    <form id="myForm" onsubmit="return false;">
+      <label for="inputData">Enter data: </label>
+      <input type="text" id="inputData" name="inputData" required>
+    </form>
 
-    function updateMessages() {
-        const messagesContainer = document.getElementById('messages-container');
-        messagesContainer.textContent = messages[currentIndex];
+    <div class="chatbox" id="chatbox"></div>
 
-        // Increment the index for the next message
-        currentIndex = (currentIndex + 1) % messages.length;
+
+<script>
+  const inputDataField = document.getElementById("inputData");
+  const chatbox = document.getElementById("chatbox");
+
+  inputDataField.addEventListener("keyup", function(event) {
+    // Check if Enter key (keyCode 13) is pressed
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission
+      processData(inputDataField.value);
     }
+  });
 
-    function callPythonFunction() {
+  function processData(data) {
+    const message = document.createElement("p");
+    message.innerHTML = "<b>User: </b>" + data;
+    chatbox.appendChild(message);
+
     fetch('/call-python-function?name={{name}}' )
         .then(response => response.text())
         .then(text => {
-            const stringContainer = document.getElementById('string-container');
-            stringContainer.textContent = text;
+            const message = document.createElement("p");
+            message.textContent = text;
+            chatbox.appendChild(message);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
-        updateMessages();
-    }
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
 
 </script>
 
-    <h1>Updated String</h1>
-    <div id="string-container">
-        <!-- Updated string will be displayed here -->
-    </div>
+
 
 <form>
   <button type="button" onclick="callPythonFunction()">Call Python Function</button>

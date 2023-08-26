@@ -1,6 +1,12 @@
 import json
 from src import main
 
+TESTING = True
+if TESTING:
+    from src import mock as backend
+else:
+    import script as backend
+
 from flask import Flask, render_template, request, redirect, url_for, flash
 
 app = Flask(__name__)
@@ -46,9 +52,6 @@ def login():
 
     return render_template("login.html")
 
-global fruits
-fruits = ['Apple', 'Banana', 'Orange', 'Mango']
-
 @app.route("/use")
 def use():
     if not "name" in request.args:
@@ -60,17 +63,10 @@ def use():
 
 @app.route('/call-python-function')
 def call_python_function():
-    fruits.append("new")
     if not "name" in request.args:
         return {'result': 'failure'}
 
-    name = request.args['name']
-    f = open("users/" + name + "/usrdata.json", "r")
-    out = json.load(f)
-    f.close()
-
-    print(fruits)
-    return str(out)
+    return backend.chat_with_gpt(request.args['name'])
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port = 8080, debug=True)
