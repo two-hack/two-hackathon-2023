@@ -12,21 +12,25 @@ SECRET_KEYWORD = "ADMIN"
 
 ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
 
-USER_ID = 500
-FILENAME = str(USER_ID) + ".pkl"
 #USR_JSONPATH = "usrdata.json"
 
-PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
-PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
+def get_picklefile(username):
+    return str(username) + ".pkl"
 
-if not os.path.exists(PATH_TO_USER_FOLDER):
-    os.makedirs(PATH_TO_USER_FOLDER)
-if not os.path.exists(PATH_TO_USER_HISTORY):
-    os.makedirs(PATH_TO_USER_HISTORY)
-numConversations = len([f for f in os.listdir(PATH_TO_USER_HISTORY) if os.path.isfile(os.path.join(PATH_TO_USER_HISTORY, f))])
-PATH_TO_NEW_CONVERSATION = PATH_TO_USER_HISTORY + "/Conversation" + str(numConversations+1) + ".txt"
-with open(PATH_TO_NEW_CONVERSATION, "w"):
-    pass
+def make_conversation_file(username):
+    path_to_user_folder = "users/" + str(username)
+    path_to_user_history = path_to_user_folder + "/history"
+
+    if not os.path.exists(path_to_user_folder):
+        os.makedirs(path_to_user_folder)
+    if not os.path.exists(path_to_user_history):
+        os.makedirs(path_to_user_history)
+    numConversations = len([f for f in os.listdir(path_to_user_history) if os.path.isfile(os.path.join(path_to_user_history, f))])
+    path_to_new_conversation = path_to_user_history + "/Conversation" + str(numConversations+1) + ".txt"
+    with open(path_to_new_conversation, "w"):
+        pass
+    return path_to_new_conversation
+
 
 class DataStorage:
     def __init__(self):
@@ -49,10 +53,11 @@ class DataStorage:
     def getValues(self):
         return self.data.values()
 
-datastorage = DataStorage()
-
-if os.path.exists(FILENAME):
-    datastorage.load_data(FILENAME)
+def get_pickled_data(username):
+    datastorage = DataStorage()
+    if os.path.exists(get_picklefile(username)):
+        datastorage.load_data(get_picklefile(username))
+    return datastorage
 
 # graph = {}
 
@@ -173,8 +178,8 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 
     return assistant_reply
 
-def init(usr_jsonpath):
-
+def init(usr_folder):
+    usr_jsonpath = os.path(os.path.normpath(f"{usr_folder}/usrdata.json"))
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
@@ -183,8 +188,10 @@ def init(usr_jsonpath):
     print(initial_text)
     return initial_text
 
-def end(lastInput, usr_jsonpath):
+def end(lastInput, usr_folder, username):
     global FINAL
+    usr_jsonpath = os.path(os.path.normpath(f"{usr_folder}/usrdata.json"))
+    datastorage = get_pickled_data(username)
 
     f = open("final_prompt.txt")
     FINAL = f.read()
@@ -220,21 +227,6 @@ def end(lastInput, usr_jsonpath):
     updated_stats.dump_to_json(usr_jsonpath)
     datastorage.add_entry(timestamp, stats)
     
-    try:
-        BEHAVIOUR = lines[5]
-    except:
-        BEHAVIOUR = ""
-
-    try:
-        PERSONALITY = lines[6]
-    except:
-        PERSONALITY = ""
-
-    try:
-        MISTAKES = lines[8]
-    except:
-        MISTAKES = ""
-
     if lastInput == "graph":
 
         # Extract timestamps and values from the dictionary
@@ -266,24 +258,21 @@ def end(lastInput, usr_jsonpath):
 
         plt.xlabel("Timestamps")
         plt.ylabel("Values")
-        plt.title("User {}'s Progress".format(USER_ID))
+        plt.title("User {}'s Progress".format(username))
         plt.legend()
         plt.xticks(rotation=45)
         plt.tight_layout()
 
         
 
-        plt.savefig("User {}s Progress.png".format(USER_ID))
+        plt.savefig("User {}s Progress.png".format(username))
 
         # print(graph)
 
-    datastorage.save_data(FILENAME)
-
-def main()
+    datastorage.save_data(get_picklefile(username=username))
 
 
 if __name__ == "__main__":
-    print("Welcome to the language app!")
 
     init()
 
