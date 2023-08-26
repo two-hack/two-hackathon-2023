@@ -19,6 +19,38 @@
   const inputDataField = document.getElementById("inputData");
   const chatbox = document.getElementById("chatbox");
 
+  function call_init() {
+      fetch('/handle_innit?name={{name}}')
+          .then(response => response.text())
+          .then(text => {
+              const message = document.createElement("p");
+              message.textContent = text;
+              chatbox.appendChild(message);
+
+              document.getElementById("myForm").style.display = "block";
+              document.getElementsByClassName("loading")[0].style.display = "none";
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+  }
+
+  function call_end() {
+        document.getElementById("myForm").style.display = "none";
+
+    fetch('/handle_prompt?data=END&name={{name}}')
+        .then(response => response.text())
+        .then(text => {
+            const message = document.createElement("p");
+            message.textContent = text;
+            chatbox.appendChild(message);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+  }
+
   inputDataField.addEventListener("keyup", function(event) {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -34,6 +66,7 @@
               message.innerHTML = text;
               chatbox.appendChild(message);
 
+<<<<<<< HEAD
               document.getElementById("myForm").style.display = "block";
               document.getElementsByClassName("loading")[0].style.display = "none";
           })
@@ -46,6 +79,9 @@
         document.getElementById("myForm").style.display = "none";
 
     fetch('/handle_prompt?data=END&name={{name}}')
+=======
+    fetch('/handle_prompt?data='+data)
+>>>>>>> 8f7162b (major ui update)
         .then(response => response.text())
         .then(text => {
             const message = document.createElement("p");
