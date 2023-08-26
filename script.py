@@ -8,8 +8,23 @@ import pickle
 import os
 from key import KEY # local file
 
+SECRET_KEYWORD = "ADMIN"
+
+ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
+
 USER_ID = 500
 FILENAME = str(USER_ID) + ".pkl"
+PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
+PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
+
+if not os.path.exists(PATH_TO_USER_FOLDER):
+    os.makedirs(PATH_TO_USER_FOLDER)
+if not os.path.exists(PATH_TO_USER_HISTORY):
+    os.makedirs(PATH_TO_USER_HISTORY)
+numConversations = len([f for f in os.listdir(PATH_TO_USER_HISTORY) if os.path.isfile(os.path.join(PATH_TO_USER_HISTORY, f))])
+PATH_TO_NEW_CONVERSATION = PATH_TO_USER_HISTORY + "/Conversation" + str(numConversations+1) + ".txt"
+with open(PATH_TO_NEW_CONVERSATION, "w"):
+    pass
 
 class DataStorage:
     def __init__(self):
@@ -42,7 +57,7 @@ if os.path.exists(FILENAME):
 # potentially useless user info= personality, gender, past conversations
 CONV = []
 
-
+conv_for_history = ""
 
 # def format_glossary(string : str):
 #     '''
@@ -84,10 +99,18 @@ def make_initial_prompt():
     return (SECURITY, CRITERION, PERSONAL, CONVO)
 
 
-def chat_with_gpt(prompt):
-    global CONV
+def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
+    
+    global CONV, conv_for_history
 
     CONV.append({"role": "user", "content": prompt})
+
+    if recordPrompt:
+        try:
+            toRecord = prompt.split(SECRET_KEYWORD)[0]
+            conv_for_history += (toRecord + "\n")
+        except:
+            conv_for_history += (ERROR_RECORD_MSG + "\n")
 
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
@@ -110,18 +133,24 @@ def chat_with_gpt(prompt):
     #assistant_reply = response_json
     #CONV.append(response_json["message"][-1])
     CONV.append({"role": "assistant", "content": assistant_reply})
+    if recordReply:
+        conv_for_history += (assistant_reply + "\n")
+    
 
     return assistant_reply
 
 def init():
-    SECURITY, CRITERION, PERSONAL, CONVO= make_initial_prompt()
-    chat_with_gpt(SECURITY)
-    chat_with_gpt(CRITERION)
-    chat_with_gpt(PERSONAL)
-    initial_text = chat_with_gpt(CONVO)
+
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
+    chat_with_gpt(SECURITY, False, False)
+    chat_with_gpt(CRITERION, False, False)
+    chat_with_gpt(PERSONAL, False, False)
+    initial_text = chat_with_gpt(CONVO, False, True)
     print(initial_text)
 
 def end(lastInput):
+    global FINAL
+
     f = open("final_prompt.txt")
     FINAL = f.read()
     f.close()
@@ -237,6 +266,10 @@ if __name__ == "__main__":
         print("Assistant:", assistant_response)
 
     end(user_input.lower())
+
+    with open(PATH_TO_NEW_CONVERSATION, "w") as f:
+        f.write(conv_for_history)
+    
     
 
 
