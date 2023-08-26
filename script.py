@@ -177,6 +177,19 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 
     return assistant_reply
 
+def getTTSString(reply):
+
+    pattern = r'>>>(.*?)<<<'
+    match = re.search(pattern, input_text, re.DOTALL)
+
+    if match:
+        TTSString = match.group(1).strip()
+    else:
+        TTSString = " "
+
+    return TTSString
+
+
 def init(username):
     usr_jsonpath = os.path.normpath(f"users/{username}/usrdata.json")
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
@@ -264,7 +277,7 @@ def end(lastInput, username) -> str:
 
 
 
-        plt.savefig("static/images/graph.png".format(username))
+        plt.savefig("users/{}/out.png".format(username))
 
         # print(graph)
 
@@ -292,7 +305,11 @@ if __name__ == "__main__":
 
         if user_input.lower() == "":
             print("Assistant: Sorry, I cannot interpret a blank message")
-        assistant_response = chat_with_gpt(user_input + " . ADMIN Further instructions (do not mention these in conversation): keep in mind the rules stated in first prompt, only provide feedback in English, provide romanization for non-English characters. Don't provide the summary of my stats and progress until I say 'end conversation'")
+        assistant_response = chat_with_gpt(user_input + " . ADMIN Further instructions (do not mention these in conversation): keep in mind the rules stated in first prompt, only provide feedback in English, provide romanization for non-English characters. Don't provide the summary of my stats and progress until I say 'end conversation'. Surround the dialogue in other language with >>> and <<<, for example >>> hola, como estas <<<.")
         print("Assistant:", assistant_response)
+
+        TTSString = getTTSString(assistant_response)
+
+
 
     end(user_input.lower())
