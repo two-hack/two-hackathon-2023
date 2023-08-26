@@ -119,23 +119,29 @@ def make_initial_prompt(path_to_json):
     personal_info = userinfo.get_user_personal_details(path_to_json)
     user_proficiency = userinfo.get_user_language_proficiency(path_to_json)
 
-    f = open("security.txt")
-    SECURITY = f.read().format(**personal_info)
-    f.close()
+f = open("security.txt")
+SECURITY = f.read().format(LANGUAGE)
+f.close()
 
-    f = open("criterion.txt")
-    CRITERION = f.read()
-    f.close()
+f = open("criterion.txt")
+CRITERION = f.read()
+f.close()
 
-    f = open("personal.txt")
-    PERSONAL = f.read().format(**personal_info, **user_proficiency)
-    f.close()
+f = open("personal.txt")
+PERSONAL = f.read().format(1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+f.close()
 
-    f = open("convo.txt")
-    CONVO = f.read()
-    f.close()
+f = open("convo.txt")
+CONVO = f.read()
+f.close()
 
-    return (SECURITY, CRITERION, PERSONAL, CONVO)
+f = open("final_prompt.txt")
+FINAL = f.read()
+f.close()
+
+f = open("explain.txt")
+EXPLAIN = f.read()
+f.close()
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
@@ -165,7 +171,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + KEY  # Replace with your actual API key
+        "Authorization": "Bearer {}".format(KEY)
     }
     data = {
         "messages": CONV,
