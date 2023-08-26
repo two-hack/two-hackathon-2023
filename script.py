@@ -14,6 +14,7 @@ ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
 
 USER_ID = 500
 FILENAME = str(USER_ID) + ".pkl"
+#USR_JSONPATH = "usrdata.json"
 
 PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
 PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
@@ -108,10 +109,10 @@ def dump_personal_summary(text, json_filepath):
         mistakes=mistakes,
         past_conversation=past_conversation)
 
-def make_initial_prompt():
+def make_initial_prompt(usr_jsonpath):
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details(USR_JSONPATH)
-    user_proficiency = userinfo.get_user_language_proficiency(USR_JSONPATH)
+    personal_info = userinfo.get_user_personal_details(usr_jsonpath)
+    user_proficiency = userinfo.get_user_language_proficiency(usr_jsonpath)
 
     f = open("security.txt")
     SECURITY = f.read().format(**personal_info)
@@ -172,16 +173,17 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 
     return assistant_reply
 
-def init():
+def init(usr_jsonpath):
 
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
     chat_with_gpt(PERSONAL, False, False)
     initial_text = chat_with_gpt(CONVO, False, True)
     print(initial_text)
+    return initial_text
 
-def end(lastInput):
+def end(lastInput, usr_jsonpath):
     global FINAL
 
     f = open("final_prompt.txt")
@@ -213,9 +215,9 @@ def end(lastInput):
     time = str(datetime.datetime.now().time().replace(microsecond=0))
     timestamp = date + " " + time
     
-    dump_personal_summary(summary, USR_JSONPATH)
+    dump_personal_summary(summary, usr_jsonpath)
     updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
-    updated_stats.dump_to_json(USR_JSONPATH)
+    updated_stats.dump_to_json(usr_jsonpath)
     datastorage.add_entry(timestamp, stats)
     
     try:
@@ -276,6 +278,9 @@ def end(lastInput):
         # print(graph)
 
     datastorage.save_data(FILENAME)
+
+def main()
+
 
 if __name__ == "__main__":
     print("Welcome to the language app!")
