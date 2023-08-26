@@ -19,7 +19,7 @@ def chat_with_gpt(string: str) -> str:
 
 def init(str):
     """should run this when user enters conv"""
-    time.sleep(2)
+    time.sleep(1)
     return """mock start message
     This shoudl be on new line
     and this
@@ -28,6 +28,8 @@ def init(str):
 def end(msg, path_to_json):
     """should run this when user leaves conv
     when uesr clck end button"""
-    time.sleep(2)
+    time.sleep(1)
+    if msg == "graph":
+        return """mock graph"""
     return """mock end message"""
 

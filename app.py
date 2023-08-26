@@ -1,7 +1,7 @@
 import json
 from src import main
 
-TESTING = True
+TESTING = False
 if TESTING:
     from src import mock as backend
 else:
