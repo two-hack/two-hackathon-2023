@@ -1,6 +1,5 @@
 import re
 import requests
-from key import KEY
 import userinfo
 import matplotlib.pyplot as plt
 import datetime
@@ -109,10 +108,10 @@ def dump_personal_summary(text, json_filepath):
         mistakes=mistakes,
         past_conversation=past_conversation)
 
-def make_initial_prompt(usr_jsonpath):
+def make_initial_prompt(path_to_json):
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details(usr_jsonpath)
-    user_proficiency = userinfo.get_user_language_proficiency(usr_jsonpath)
+    personal_info = userinfo.get_user_personal_details(path_to_json)
+    user_proficiency = userinfo.get_user_language_proficiency(path_to_json)
 
     f = open("security.txt")
     SECURITY = f.read().format(**personal_info)
@@ -134,6 +133,13 @@ def make_initial_prompt(usr_jsonpath):
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
+    """
+        handles the reqestion to openai
+
+        perms: prompt: the message user typed in
+        perms: recordPrompt: whether to record the prompt in the conversation history
+        perms: recordReply: whether to record the reply in the conversation history
+    """
 
     global CONV, conv_for_history
 
@@ -159,7 +165,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     response = requests.post(url, headers=headers, json=data)
     response_json = response.json()
 
-    # print(response_json)
+    print(response_json)
 
 
     # The structure of the response might have changed
@@ -173,9 +179,9 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 
     return assistant_reply
 
-def init(usr_jsonpath):
+def init(usr_jsonpath = "usrdata.json"):
 
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(path_to_json=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
     chat_with_gpt(PERSONAL, False, False)
@@ -278,8 +284,6 @@ def end(lastInput, usr_jsonpath):
         # print(graph)
 
     datastorage.save_data(FILENAME)
-
-def main()
 
 
 if __name__ == "__main__":

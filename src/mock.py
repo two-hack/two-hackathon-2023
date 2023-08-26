@@ -1,3 +1,4 @@
+import time
 def format_flossart(string: str):
     pass
 
@@ -16,10 +17,13 @@ def chat_with_gpt(string: str) -> str:
     """run each time user sends a message"""
     return next(gen)
 
-def init():
+def init(str):
     """should run this when user enters conv"""
+    time.sleep(2)
+    return """mock start message"""
 
-def end():
+def end(msg, path_to_json):
     """should run this when user leaves conv
     when uesr clck end button"""
+    return """mock end message"""
 

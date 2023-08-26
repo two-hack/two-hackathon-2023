@@ -1,7 +1,7 @@
 import json
 from src import main
 
-TESTING = True
+TESTING = False
 if TESTING:
     from src import mock as backend
 else:
@@ -28,7 +28,7 @@ def about():
 def create():
     print(request.form)
     if request.method == 'POST':
-        name = request.form['name']
+        name = request.form['name'].lower().strip()
         if not name:
             flash('name is required!')
         elif main.user_exists(name):
@@ -61,12 +61,26 @@ def use():
 
     return render_template("use.html",name = name)
 
-@app.route('/call-python-function')
+@app.route('/handle_prompt')
 def call_python_function():
     if not "data" in request.args:
         return "bad request, missing data"
 
-    return backend.chat_with_gpt(request.args['data'])
+    prompt = request.args["data"]
+
+    if prompt == "END":
+        return backend.end("End conversation", "users/" + request.args['name'] + "/usrdata.json")
+
+    return backend.chat_with_gpt(prompt)
+
+@app.route('/handle_innit')
+def call_back_innit():
+    if not "name" in request.args:
+        return "bad request, missing name"
+
+    name = request.args['name']
+    return backend.init("users/" + name + "/usrdata.json")
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port = 8080, debug=True)

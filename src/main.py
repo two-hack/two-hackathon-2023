@@ -10,6 +10,8 @@ def make_new_user(form_input: dict[str, str]):
         the user setting json file
     """
 
+    name = form_input['name'].lower().strip()
+
     if "age" in form_input and form_input['age'] != "":
         age = int(form_input['age'])
     else:
@@ -20,7 +22,7 @@ def make_new_user(form_input: dict[str, str]):
     out = {"user_information": {
         "personal_information": {
             "language_choice": form_input['lang'],
-            "name": form_input['name'],
+            "name": name,
             "gender": "Male",
             "interests": form_input['interests'].split(),
             "age": age,
@@ -38,6 +40,6 @@ def make_new_user(form_input: dict[str, str]):
         }
     }}
 
-    os.mkdir("users/" + form_input['name'])
-    f = open("users/" + form_input['name'] + "/usrdata.json", "w")
+    os.mkdir("users/" + name)
+    f = open("users/" + name + "/usrdata.json", "w")
     json.dump(out, f, indent=4)

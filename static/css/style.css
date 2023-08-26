@@ -200,3 +200,9 @@
         background-color: #f1f1f1;
     }
 
+
+img.loading{
+  width:100px;
+  height:100px;
+  margin: 10px;
+}
