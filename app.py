@@ -63,10 +63,10 @@ def use():
 
 @app.route('/call-python-function')
 def call_python_function():
-    if not "name" in request.args:
-        return {'result': 'failure'}
+    if not "data" in request.args:
+        return "bad request, missing data"
 
-    return backend.chat_with_gpt(request.args['name'])
+    return backend.chat_with_gpt(request.args['data'])
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port = 8080, debug=True)

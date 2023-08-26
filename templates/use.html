@@ -30,7 +30,7 @@
     message.innerHTML = "<b>User: </b>" + data;
     chatbox.appendChild(message);
 
-    fetch('/call-python-function?name={{name}}' )
+    fetch('/call-python-function?data='+data)
         .then(response => response.text())
         .then(text => {
             const message = document.createElement("p");
