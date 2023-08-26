@@ -3,7 +3,7 @@ import requests
 
 CONV = []
 
-INITIALISATION PROMPTS
+#INITIALISATION PROMPTS
 setup = """
 Act like a conversation language facilitator for the language "{}".
 Converse with the user to learn more concepts and uses of the language and to rate objectively the proficiency of the user in the language.
