@@ -13,8 +13,11 @@ ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
 
 USER_ID = 500
 FILENAME = str(USER_ID) + ".pkl"
+<<<<<<< HEAD
 #USR_JSONPATH = "usrdata.json"
 
+=======
+>>>>>>> 4d63a20 (added conversation history, and other misc updates)
 PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
 PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
 
@@ -133,6 +136,7 @@ def make_initial_prompt(path_to_json):
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
+<<<<<<< HEAD
     """
         handles the reqestion to openai
 
@@ -141,6 +145,9 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
         perms: recordReply: whether to record the reply in the conversation history
     """
 
+=======
+    
+>>>>>>> 4d63a20 (added conversation history, and other misc updates)
     global CONV, conv_for_history
 
     CONV.append({"role": "user", "content": prompt})
@@ -175,6 +182,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     CONV.append({"role": "assistant", "content": assistant_reply})
     if recordReply:
         conv_for_history += (assistant_reply + "\n")
+<<<<<<< HEAD
 
 
     return assistant_reply
@@ -182,16 +190,32 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 def init(usr_jsonpath = "usrdata.json"):
 
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(path_to_json=usr_jsonpath)
+=======
+    
+
+    return assistant_reply
+
+def init():
+
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
+>>>>>>> 4d63a20 (added conversation history, and other misc updates)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
     chat_with_gpt(PERSONAL, False, False)
     initial_text = chat_with_gpt(CONVO, False, True)
     print(initial_text)
+<<<<<<< HEAD
     return initial_text
 
 def end(lastInput, usr_jsonpath):
     global FINAL
 
+=======
+
+def end(lastInput):
+    global FINAL
+
+>>>>>>> 4d63a20 (added conversation history, and other misc updates)
     f = open("final_prompt.txt")
     FINAL = f.read()
     f.close()
@@ -314,8 +338,13 @@ if __name__ == "__main__":
 
     with open(PATH_TO_NEW_CONVERSATION, "w") as f:
         f.write(conv_for_history)
+<<<<<<< HEAD
 
 
+=======
+    
+    
+>>>>>>> 4d63a20 (added conversation history, and other misc updates)
 
 
 
