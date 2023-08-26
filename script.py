@@ -1,4 +1,7 @@
+import re
 import requests
+from key import KEY
+import userinfo
 import matplotlib.pyplot as plt
 import datetime
 import pickle
@@ -11,6 +14,8 @@ ERROR_RECORD_MSG = "[Due to an error, this message was not recorded]"
 
 USER_ID = 500
 FILENAME = str(USER_ID) + ".pkl"
+#USR_JSONPATH = "usrdata.json"
+
 PATH_TO_USER_FOLDER = "users/" + str(USER_ID)
 PATH_TO_USER_HISTORY = PATH_TO_USER_FOLDER + "/history"
 
@@ -104,34 +109,28 @@ def dump_personal_summary(text, json_filepath):
         mistakes=mistakes,
         past_conversation=past_conversation)
 
-def make_initial_prompt():
+def make_initial_prompt(usr_jsonpath):
     # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-    personal_info = userinfo.get_user_personal_details(USR_JSONPATH)
-    user_proficiency = userinfo.get_user_language_proficiency(USR_JSONPATH)
+    personal_info = userinfo.get_user_personal_details(usr_jsonpath)
+    user_proficiency = userinfo.get_user_language_proficiency(usr_jsonpath)
 
-f = open("security.txt")
-SECURITY = f.read().format(LANGUAGE)
-f.close()
+    f = open("security.txt")
+    SECURITY = f.read().format(**personal_info)
+    f.close()
 
-f = open("criterion.txt")
-CRITERION = f.read()
-f.close()
+    f = open("criterion.txt")
+    CRITERION = f.read()
+    f.close()
 
-f = open("personal.txt")
-PERSONAL = f.read().format(1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-f.close()
+    f = open("personal.txt")
+    PERSONAL = f.read().format(**personal_info, **user_proficiency)
+    f.close()
 
-f = open("convo.txt")
-CONVO = f.read()
-f.close()
+    f = open("convo.txt")
+    CONVO = f.read()
+    f.close()
 
-f = open("final_prompt.txt")
-FINAL = f.read()
-f.close()
-
-f = open("explain.txt")
-EXPLAIN = f.read()
-f.close()
+    return (SECURITY, CRITERION, PERSONAL, CONVO)
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
@@ -150,7 +149,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer {}".format(KEY)
+        "Authorization": "Bearer " + KEY  # Replace with your actual API key
     }
     data = {
         "messages": CONV,
@@ -174,16 +173,17 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 
     return assistant_reply
 
-def init():
+def init(usr_jsonpath):
 
-    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt()
+    SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
     chat_with_gpt(CRITERION, False, False)
     chat_with_gpt(PERSONAL, False, False)
     initial_text = chat_with_gpt(CONVO, False, True)
     print(initial_text)
+    return initial_text
 
-def end(lastInput):
+def end(lastInput, usr_jsonpath):
     global FINAL
 
     f = open("final_prompt.txt")
@@ -215,9 +215,9 @@ def end(lastInput):
     time = str(datetime.datetime.now().time().replace(microsecond=0))
     timestamp = date + " " + time
 
-    dump_personal_summary(summary, USR_JSONPATH)
+    dump_personal_summary(summary, usr_jsonpath)
     updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
-    updated_stats.dump_to_json(USR_JSONPATH)
+    updated_stats.dump_to_json(usr_jsonpath)
     datastorage.add_entry(timestamp, stats)
 
     try:
@@ -240,7 +240,7 @@ def end(lastInput):
         # Extract timestamps and values from the dictionary
         # graph = {
         #     '2023-08-26 20:59:48': [25, 25, 15, 30, 30],
-        #     '2023-08-26 21:59:48': [30, 27, 16, 30, 50],
+        #     '2023-08-26 21:59:48': [30``, 27, 16, 30, 50],
         #     '2023-08-26 22:59:48': [40, 30, 20, 40, 70],
         #     '2023-08-26 23:59:00': [61, 35, 54, 41, 95]
         # }
@@ -271,11 +271,16 @@ def end(lastInput):
         plt.xticks(rotation=45)
         plt.tight_layout()
 
+
+
         plt.savefig("User {}s Progress.png".format(USER_ID))
 
         # print(graph)
 
     datastorage.save_data(FILENAME)
+
+def main()
+
 
 if __name__ == "__main__":
     print("Welcome to the language app!")
@@ -283,14 +288,20 @@ if __name__ == "__main__":
     init()
 
     while True:
+
         user_input = input("You: ")
         if user_input.lower() == "explain":
+            f = open("explain.txt")
+            EXPLAIN = f.read()
+            f.close()
             user_input = EXPLAIN
         if user_input.lower() == "end conversation":
             break
         if user_input.lower() == "graph":
             break
 
+        if user_input.lower() == "":
+            print("Assistant: Sorry, I cannot interpret a blank message")
         assistant_response = chat_with_gpt(user_input + " . ADMIN Further instructions (do not mention these in conversation): keep in mind the rules stated in first prompt, only provide feedback in English, provide romanization for non-English characters. Don't provide the summary of my stats and progress until I say 'end conversation'")
         print("Assistant:", assistant_response)
 
