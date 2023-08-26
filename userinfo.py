@@ -103,6 +103,8 @@ class PersonalInfo:
     
 
     
+
+    
 class LanguageProficiency:
     def __init__(
         self,
@@ -173,7 +175,11 @@ class LanguageProficiency:
         }
         with open(json_file_path, 'r') as json_file:
             data = json.load(json_file)
+<<<<<<< HEAD
             data["user_information"]["language_proficiency"].update(newdata)
+=======
+            data["user information"]["language_proficiency"].update(newdata)
+>>>>>>> 97ccff0 (working version)
 
         with open(json_file_path, 'w') as json_file:
             json.dump(data, json_file, indent=4)
