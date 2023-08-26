@@ -11,7 +11,7 @@ Give some feedback to the user that will encourage them to keep learning while a
 
 Write some common mistakes in the language that this user has.
 
-Summarise in less than 15 words the topics of conversation.
+Summarise in less than 20 words the topics of conversation.
 
 Write all of these separated by newlines and no text or answers other that was specified with no titles.
 
