@@ -1,7 +1,7 @@
 import json
 from src import main
 
-TESTING = False
+TESTING = True
 if TESTING:
     from src import mock as backend
 else:
@@ -70,6 +70,8 @@ def handle_prompt():
 
     if prompt == "END":
         return main.parse_respone(backend.end("End conversation", request.args['name']))
+    if prompt == "GRAPH":
+        return main.parse_respone(backend.end("graph", request.args['name']))
 
     print(f"sending prompt: {prompt}")
     respone = backend.chat_with_gpt(prompt)

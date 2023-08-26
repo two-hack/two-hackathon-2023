@@ -28,5 +28,6 @@ def init(str):
 def end(msg, path_to_json):
     """should run this when user leaves conv
     when uesr clck end button"""
+    time.sleep(2)
     return """mock end message"""
 

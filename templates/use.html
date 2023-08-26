@@ -8,6 +8,7 @@
       <label for="inputData">Enter data: </label>
       <input type="text" id="inputData" name="inputData" required>
       <button type="button" onclick="call_end()">End Conversation</button>
+      <button type="button" onclick="call_graph()">Graph</button>
     </form>
 
 
@@ -18,6 +19,14 @@
 
   const inputDataField = document.getElementById("inputData");
   const chatbox = document.getElementById("chatbox");
+
+  inputDataField.addEventListener("keyup", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      call_prompt(inputDataField.value);
+    }
+  });
+
 
   function call_init() {
       fetch('/handle_innit?name={{name}}')
@@ -35,15 +44,21 @@
           });
   }
 
-  function call_end() {
-        document.getElementById("myForm").style.display = "none";
+  function call_graph() {
+    document.getElementById("myForm").style.display = "none";
+    document.getElementsByClassName("loading")[0].style.display = "block";
 
-    fetch('/handle_prompt?data=END&name={{name}}')
+    fetch('/handle_prompt?data=GRAPH&name={{name}}')
         .then(response => response.text())
         .then(text => {
             const message = document.createElement("p");
             message.textContent = text;
             chatbox.appendChild(message);
+
+            document.getElementsByClassName("loading")[0].style.display = "none";
+
+            document.createElement("img").src = "{{url_for('static', filename='images/loading.gif')}}";
+
         })
         .catch(error => {
             console.error('Error fetching data:', error);
@@ -51,12 +66,24 @@
 
   }
 
-  inputDataField.addEventListener("keyup", function(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      call_prompt(inputDataField.value);
-    }
-  });
+  function call_end() {
+    document.getElementsByClassName("loading")[0].style.display = "block";
+    document.getElementById("myForm").style.display = "none";
+
+
+    fetch('/handle_prompt?data=END&name={{name}}')
+        .then(response => response.text())
+        .then(text => {
+            const message = document.createElement("p");
+            message.textContent = text;
+            chatbox.appendChild(message);
+            document.getElementsByClassName("loading")[0].style.display = "none";
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+  }
 
   function call_init() {
       fetch('/handle_innit?name={{name}}')

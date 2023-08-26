@@ -264,7 +264,7 @@ def end(lastInput, username) -> str:
 
 
 
-        plt.savefig("User {}s Progress.png".format(username))
+        plt.savefig("users/{}/out.png".format(username))
 
         # print(graph)
 
