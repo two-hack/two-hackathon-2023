@@ -20,7 +20,10 @@ def chat_with_gpt(string: str) -> str:
 def init(str):
     """should run this when user enters conv"""
     time.sleep(2)
-    return """mock start message"""
+    return """mock start message
+    This shoudl be on new line
+    and this
+    """
 
 def end(msg, path_to_json):
     """should run this when user leaves conv

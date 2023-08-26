@@ -59,10 +59,10 @@ def use():
 
     name = request.args['name']
 
-    return render_template("use.html",name = name)
+    return render_template("use.html", name = name)
 
 @app.route('/handle_prompt')
-def call_python_function():
+def handle_prompt():
     if not "data" in request.args:
         return "bad request, missing data"
 
@@ -71,7 +71,9 @@ def call_python_function():
     if prompt == "END":
         return backend.end("End conversation", "users/" + request.args['name'] + "/usrdata.json")
 
-    return backend.chat_with_gpt(prompt)
+    print(f"sending prompt: {prompt}")
+    respone = backend.chat_with_gpt(prompt)
+    return main.parse_respone(respone)
 
 @app.route('/handle_innit')
 def call_back_innit():
@@ -79,9 +81,11 @@ def call_back_innit():
         return "bad request, missing name"
 
     name = request.args['name']
-    return backend.init("users/" + name + "/usrdata.json")
+
+    print(f"sending innit")
+    respone = backend.init("users/" + name + "/usrdata.json")
+    return main.parse_respone(respone)
 
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port = 8080, debug=True)
-

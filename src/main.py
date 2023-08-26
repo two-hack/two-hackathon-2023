@@ -1,4 +1,5 @@
 import os
+import re
 import json
 
 def user_exists(name):
@@ -43,3 +44,11 @@ def make_new_user(form_input: dict[str, str]):
     os.mkdir("users/" + name)
     f = open("users/" + name + "/usrdata.json", "w")
     json.dump(out, f, indent=4)
+
+def parse_respone(respone:str):
+    """replaces \\n and other md things with html tag"""
+    respone = respone.replace("\n", "<br>")
+    respone = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', respone)
+    respone = re.sub(r'\*(.*?)\*', r'<i>\1</i>', respone)
+    print(respone)
+    return respone
