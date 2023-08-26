@@ -5,13 +5,29 @@ Criteria, rating
 
 Write thing to note about this users behaviours that might help the next conversation be more interesting and educative in a few sentences.
 
+the format for the behaviour should follow this format:
+
+"Behaviour: " + behaviour displayed during the conversation
+
 Write about how the users personality presented on this conversation and use the personality from the first prompt to update the personality field, describe it in 10 words.
+
+the update for the personality field should follow this format:
+
+"Personality: " + updated personality
 
 Give some feedback to the user that will encourage them to keep learning while also outlining ways they can improve in each criteria and in general.
 
 Write some common mistakes in the language that this user has.
 
+the update for the mistakes field should follow this format:
+
+"Mistakes: " + mistakes
+
 Summarise in less than 20 words the topics of conversation.
+
+the format for the conversation topics should be
+
+"Conversation topics: " + topics that were discussed
 
 Write all of these separated by newlines and no text or answers other that was specified with no titles.
 

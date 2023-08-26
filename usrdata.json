@@ -4,19 +4,30 @@
             "language_choice": "Bahasa Indonesia",
             "name": "Brian",
             "gender": "Male",
-            "interests": ["Rock Climbing", "Skateboard", "Mathematics"],
+            "interests": [
+                "Rock Climbing",
+                "Skateboard",
+                "Mathematics"
+            ],
             "age": 19,
-            "personality": "Cheerful",
-            "mistakes": "Grammatical errors",
-            "past_conversation": "None",
-            "behaviours": "Complete beginner"
+            "personality": [
+                "Personality: Cheerful and persistent with eager to express thoughts."
+            ],
+            "mistakes": [
+                "Mistakes: Minor sentence structure errors",
+                "confusion with vocabulary."
+            ],
+            "past_conversation": "Conversation topics: Climbing, skateboarding, Rubik's Cube solving strategies, and hobbies.",
+            "behaviours": [
+                "Behaviour: Brian tends to directly translate sentences from English to Bahasa Indonesia."
+            ]
         },
-        "language_proficiency":{
-            "vocabulary": 1,
-            "grammar": 1,
-            "social and cultural context": 1,
-            "comprehension": 1,
-            "conversational skills": 1
+        "language_proficiency": {
+            "vocabulary": 30,
+            "grammar": 30,
+            "social and cultural context": 20,
+            "comprehension": 40,
+            "conversational skills": 40
         }
     }
 }
