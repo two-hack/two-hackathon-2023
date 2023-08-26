@@ -1,0 +1,22 @@
+{
+    "user_information": {
+        "personal_information": {
+            "language_choice": "japanese",
+            "name": "Brian",
+            "gender": "Male",
+            "interests": "Rock Climbing",
+            "age": 19,
+            "personality": "Cheerful",
+            "mistakes": "Grammatical errors",
+            "past_conversation": "None",
+            "behaviours": "Complete beginner"
+        },
+        "language_proficiency":{
+            "vocabulary": 1,
+            "grammar": 1,
+            "social and cultural context": 1,
+            "comprehension": 1,
+            "conversational skills": 1
+        }
+    }
+}

@@ -6,9 +6,11 @@ Keep the conversion simple enough so that the user will understand and follow th
 
 If the users average proficiency level is below 66 give feedback in English, and a word for word translation. Write everything that is not part of the conversation in English.
 
-After giving a glossary of words that could be used for this conversation: Considering all of the users information, including level of proficiency; please create a glossary of all of the potential words that might be useful for this conversation tailored to their interests write them in this format:
+After giving a glossary of words that could be used for this conversation: Considering all of the users information, including level of proficiency; please create a glossary of all of the potential words that might be useful for this conversation tailored to their interests write them in this format, numbered:
 
 Word, Definition (Translation): Example_Sentence (translation). 
+
+End the glossary with a newline of "----------"
 
 Initiate an interesting conversation with the user in the language specified before considering all of the information given. Start with a question that could spark an interesting conversation, and await for an answer, after the user answers continue with the conversation. 
 

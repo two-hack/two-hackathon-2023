@@ -30,34 +30,47 @@
 #         print("Assistant:", assistant_response)
 
 
-
+import re
 import requests
+from key import KEY
+import userinfo
 
+# potentially useless user info= personality, gender, past conversations
 CONV = []
 
-LANGUAGE = "Chinese" # the one to learn
-# PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+def format_glossary(string : str):
+    '''
+    takes the raw message sent by the AI, and formats it into a list of words
+    '''
+    
 
 
-f = open("security.txt")
-SECURITY = f.read().format(LANGUAGE)
-f.close()
 
-f = open("criterion.txt")
-CRITERION = f.read()
-f.close()
+def update_glossary():
+    pass
 
-f = open("personal.txt")
-PERSONAL = f.read().format(1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
-f.close()
+def make_initial_prompt():
+    # PERSONAL_INFO = (1,1,1,1,1, "Complete beginner", "Grammatical errors", "None", "John", "Male", "Guitar, programming, AFL", "45", "Outgoing")
+    personal_info = userinfo.get_user_personal_details("usrdata.json")
+    user_proficiency = userinfo.get_user_language_proficiency("usrdata.json")
 
-f = open("convo.txt")
-CONVO = f.read()
-f.close()
+    f = open("security.txt")
+    SECURITY = f.read().format(**personal_info)
+    f.close()
 
-f = open("final_prompt.txt")
-FINAL = f.read()
-f.close()
+    f = open("criterion.txt")
+    CRITERION = f.read()
+    f.close()
+
+    f = open("personal.txt")
+    PERSONAL = f.read().format(**personal_info, **user_proficiency)
+    f.close()
+
+    f = open("convo.txt")
+    CONVO = f.read()
+    f.close()
+
+    return (SECURITY, CRITERION, PERSONAL, CONVO)
 
 
 def chat_with_gpt(prompt):
@@ -68,7 +81,7 @@ def chat_with_gpt(prompt):
     url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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"  # Replace with your actual API key
+        "Authorization": "Bearer " + KEY  # Replace with your actual API key
     }
     data = {
         "messages": CONV,
@@ -90,12 +103,18 @@ def chat_with_gpt(prompt):
     return assistant_reply
 
 def init():
+    SECURITY, CRITERION, PERSONAL, CONVO= make_initial_prompt()
     chat_with_gpt(SECURITY)
     chat_with_gpt(CRITERION)
     chat_with_gpt(PERSONAL)
-    print(chat_with_gpt(CONVO))
+    initial_text = chat_with_gpt(CONVO)
+    print(initial_text)
 
 def end():
+    
+    f = open("final_prompt.txt")
+    FINAL = f.read()
+    f.close()
     print(chat_with_gpt(FINAL))
 
 if __name__ == "__main__":
@@ -106,8 +125,9 @@ if __name__ == "__main__":
     while True:
         user_input = input("You: ")
         if user_input.lower() == "end conversation":
-            
             break
+        if user_input.lower() == "":
+            print("Assistant: Sorry, I cannot interpret a blank message")
         assistant_response = chat_with_gpt(user_input + " . ADMIN Further instructions (do not mention these in conversation): keep in mind the rules stated in first prompt, only provide feedback in English, provide romanization for non-English characters. Don't provide the summary of my stats and progress until I say 'end conversation'")
         print("Assistant:", assistant_response)
 
