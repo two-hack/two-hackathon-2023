@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+{% block header %} The Language thingy {% endblock %}
+{% block content %}
+
+  <img src="static/image/home.jpg" alt="" width="100%">
+
+  <div class="features">
+    <div class="feature">
+      <h2>Exquisite Design</h2>
+      <p>Our designs are meticulously crafted to perfection.</p>
+    </div>
+    <div class="feature">
+      <h2>Premium Quality</h2>
+      <p>We ensure top-notch quality in every aspect of our work.</p>
+    </div>
+    <div class="feature">
+      <h2>Customer Satisfaction</h2>
+      <p>Your satisfaction is our ultimate goal.</p>
+    </div>
+  </div>
+
+  <div class="start">
+    <h1>Get Started now!</h1>
+    <button><a href="{{url_for('login')}}">Log in</a></button>
+    <button><a href="{{url_for('create')}}">Sign up</a></button>
+  </div>
+
+
+{% endblock %}

@@ -14,6 +14,10 @@ def root():
 def home():
     return render_template("home.html")
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
 @app.route('/create/', methods=('GET', 'POST'))
 def create():
     print(request.form)

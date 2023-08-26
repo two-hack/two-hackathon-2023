@@ -39,19 +39,13 @@
 
     .features {
       display: flex;
-      justify-content: space-around;
-      background-color: white;
-      padding: 3rem 0;
-    }
-
-    .features {
-      display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       background-color: white;
       padding: 3rem 0;
     }
 
     .feature {
+      flex: 1;
       text-align: center;
       padding: 1rem;
     }
