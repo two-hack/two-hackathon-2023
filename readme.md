@@ -1,5 +1,6 @@
 # Janulus
 ![](https://github.com/bri-maybe/two-hackathon-2023/blob/main/JA.png)
+
 Janulus is an AI-powered conversation app designed to help you become fluent in just about any language you want. Janulus provides tailored conversations (via text or audio) based on users' interests and abilities with real-time feedback. Paired with progress tracking across 5 proficiency ratings, this app will build your confidence while encouraging consistent learning.
 
 Practice in conversation is one of the best ways to improve in a language. However, friends who speak that language won't always be available to practice with you, and beginners may feel nervous about making mistakes in front of someone else. This app aims to bridge that gap, by providing a stress-free environment where learners of all skill levels can engage in customisable conversations 24/7 while receiving instant tailored feedback.
