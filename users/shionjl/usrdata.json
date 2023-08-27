@@ -1,0 +1,37 @@
+{
+    "user_information": {
+        "personal_information": {
+            "language_choice": "japanese",
+            "name": "shionjl",
+            "gender": "Male",
+            "interests": [
+                "piano",
+                "anime"
+            ],
+            "age": 18,
+            "personality": [
+                "Personality: Interested",
+                "responsive",
+                "concise",
+                "prompt",
+                "eager for conversation",
+                "lacks detail in responses."
+            ],
+            "mistakes": [
+                "Mistakes: Incorrect phrase \"\u3068\u3082\u3060\u3061\u306b\u306f\u304c\u3067\u3082.\" Unclear intention in responses. Sentence structuring and detailing could be improved."
+            ],
+            "past_conversation": "Conversation topics: User's favourite anime, Anime watched with friends.",
+            "behaviours": [
+                "Behaviour: The user gives responses but could offer more detailed ones",
+                "their vocabulary could be improved by introducing more complex sentences."
+            ]
+        },
+        "language_proficiency": {
+            "vocabulary": 55,
+            "grammar": 48,
+            "social and cultural context": 52,
+            "comprehension": 53,
+            "conversational skills": 42
+        }
+    }
+}

@@ -11,14 +11,13 @@
 
     <header>
         <h1>{% block header %} {% endblock %}</h1>
+        <nav>
+            <a href="{{url_for('home')}}">Home</a>
+            <a href="https://github.com/bri-maybe/two-hackathon-2023">About</a>
+            <a href="{{url_for('login')}}">Login</a>
+            <a href="{{url_for('create')}}">Sign up</a>
+        </nav>
     </header>
-
-    <nav>
-        <a href="{{url_for('home')}}">Home</a>
-        <a href="https://github.com/bri-maybe/two-hackathon-2023">About</a>
-        <a href="{{url_for('login')}}">Login</a>
-        <a href="{{url_for('create')}}">Sign up</a>
-    </nav>
 
     <div class="content">
         {% for message in get_flashed_messages() %}
