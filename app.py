@@ -1,7 +1,8 @@
 import json
 from src import main
+from src import gtts
 
-TESTING = True
+TESTING = False
 if TESTING:
     from src import mock as backend
 else:
@@ -52,6 +53,9 @@ def login():
 
     return render_template("login.html")
 
+last_msg:str = ""
+
+
 @app.route("/use")
 def use():
     if not "name" in request.args:
@@ -63,6 +67,8 @@ def use():
 
 @app.route('/handle_prompt')
 def handle_prompt():
+    global last_msg
+
     if not "data" in request.args:
         return "bad request, missing data"
 
@@ -75,10 +81,13 @@ def handle_prompt():
 
     print(f"sending prompt: {prompt}")
     respone = backend.chat_with_gpt(prompt)
+    last_msg = respone
     return main.parse_respone(respone)
 
 @app.route('/handle_innit')
 def call_back_innit():
+    global last_msg
+
     if not "name" in request.args:
         return "bad request, missing name"
 
@@ -86,7 +95,23 @@ def call_back_innit():
 
     print(f"sending innit")
     respone = backend.init(name)
+    last_msg = respone
     return main.parse_respone(respone)
+
+@app.route('/handle_tts')
+def handle_tts():
+    if not "name" in request.args:
+        return "bad request, missing data"
+
+    f = open("users/" + request.args['name'] + "/usrdata.json", "r")
+    lang = json.load(f)["user_information"]["personal_information"]["language_choice"]
+
+
+    speak = backend.getTTSString(last_msg)
+    gender = "male"
+    print("\n ======= in to tts\n", lang, gender, speak)
+    tts = gtts.synthesise(speak, lang, gender)
+    return "done"
 
 
 if __name__ == "__main__":

@@ -33,3 +33,8 @@ def end(msg, path_to_json):
         return """mock graph"""
     return """mock end message"""
 
+
+def getTTSString(string: str) -> str:
+    """return string to be sent to tts"""
+    return string
+

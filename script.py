@@ -180,7 +180,7 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
 def getTTSString(reply):
 
     pattern = r'>>>(.*?)<<<'
-    match = re.search(pattern, input_text, re.DOTALL)
+    match = re.search(pattern, reply, re.DOTALL)
 
     if match:
         TTSString = match.group(1).strip()
@@ -275,9 +275,7 @@ def end(lastInput, username) -> str:
         plt.xticks(rotation=45)
         plt.tight_layout()
 
-
-
-        plt.savefig("users/{}/out.png".format(username))
+        plt.savefig("static/images/graph.png".format(username))
 
         # print(graph)
 

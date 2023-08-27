@@ -5,11 +5,16 @@
 {% block content %}
     <img  class="loading" src="{{url_for('static', filename='images/loading.gif')}}" alt="loading">
     <form id="myForm" onsubmit="return false;" style="display:none;">
-      <label for="inputData">Enter data: </label>
-      <input type="text" id="inputData" name="inputData" required>
+      <label for="inputData">Say something: </label>
+      <input type="text" id="inputData" name="inputData">
       <button type="button" onclick="call_end()">End Conversation</button>
-      <button type="button" onclick="call_graph()">Graph</button>
+      <button type="button" onclick="call_graph()">See progress</button>
+      <button id="tts" type="button" onclick="call_tts()">Listen to it!</button>
     </form>
+
+    <audio controls id="audioPlayer">
+    <source src="{{url_for('static', filename='output.mp3')}}" type="audio/mp3" id="audioSource">
+    </audio>
 
 
     <div class="chatbox" id="chatbox"></div>
@@ -39,6 +44,7 @@
 
               document.getElementById("myForm").style.display = "block";
               document.getElementsByClassName("loading")[0].style.display = "none";
+              document.getElementById("tts").disabled = false;
           })
           .catch(error => {
               console.error('Error fetching data:', error);
@@ -140,6 +146,31 @@
         });
 
     chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  function call_tts() {
+    fetch('/handle_tts?name={{name}}')
+    .then(response => response.text())
+    .then(text => {
+        const audioSource = document.getElementById("audioSource");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        // Change the source URL to force refresh
+        audioSource.src = "output.mp3";
+
+        // Reload the audio player to apply the changes
+        audioPlayer.load();
+        audioPlayer.play();
+    })
+
+
+
+    const audio = document.createElement("audio");
+    audio.src = "{{url_for('static', filename='output.mp3')}}";
+    audio.load();
+    audio.controls = true;
+    audio.play();
+    chatbox.appendChild(audio);
   }
 
   window.onload = call_init();
