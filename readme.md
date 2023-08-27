@@ -15,6 +15,10 @@ People who want to practice conversations in a foreign language but cannot find 
 - Per-text Feedback and General Conversation Feedback
 
 ## How to use
+Copy and paste your openai key to `key.py` with `KEY= <secrte key>`.
+Then ensure your have all dependancy install and run the app with `python -m app`
+Once started, follow the link shown on the console and:
+
 1. Create username and sign in
 2. Select language, proficiency level, and hobbies
 3. Initiate conversation in the language
