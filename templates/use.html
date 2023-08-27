@@ -159,29 +159,22 @@
     chatbox.scrollTop = chatbox.scrollHeight;
   }
 
+  let audio_num = 0;
+
   function call_tts() {
-    fetch('/handle_tts?name={{name}}')
+    console.log(audio_num)
+    fetch('/handle_tts?name={{name}}&num='+audio_num.toString())
     .then(response => response.text())
     .then(text => {
-        const audioSource = document.getElementById("audioSource");
-        const audioPlayer = document.getElementById("audioPlayer");
-
-        // Change the source URL to force refresh
-        audioSource.src = "output.mp3";
-
-        // Reload the audio player to apply the changes
-        audioPlayer.load();
-        audioPlayer.play();
+        const audio = document.createElement("audio");
+        audio.src = text;
+        audio.load();
+        audio.controls = true;
+        audio.play();
+        chatbox.appendChild(audio);
     })
+    audio_num += 1;
 
-
-
-    const audio = document.createElement("audio");
-    audio.src = "{{url_for('static', filename='output.mp3')}}";
-    audio.load();
-    audio.controls = true;
-    audio.play();
-    chatbox.appendChild(audio);
   }
 
   window.onload = call_init();

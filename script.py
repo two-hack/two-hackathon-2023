@@ -194,9 +194,13 @@ def init(username):
     usr_jsonpath = os.path.normpath(f"users/{username}/usrdata.json")
     SECURITY, CRITERION, PERSONAL, CONVO = make_initial_prompt(usr_jsonpath=usr_jsonpath)
     chat_with_gpt(SECURITY, False, False)
+    print(f"====== 1 / 4 =====")
     chat_with_gpt(CRITERION, False, False)
+    print(f"====== 2 / 4 =====")
     chat_with_gpt(PERSONAL, False, False)
+    print(f"====== 3 / 4 =====")
     initial_text = chat_with_gpt(CONVO, False, True)
+    print(f"====== 4 / 4 =====")
     print(initial_text)
     return initial_text
 
@@ -235,7 +239,14 @@ def end(lastInput, username) -> str:
     timestamp = date + " " + time
 
     dump_personal_summary(summary, usr_jsonpath)
-    updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
+
+    ###added for temp fix beofre demo
+    try:
+        updated_stats = userinfo.LanguageProficiency(stats[0], stats[1], stats[2], stats[3], stats[4])
+    except:
+        updated_stats = userinfo.LanguageProficiency(20,20,20,20,20)
+    ###################
+
     updated_stats.dump_to_json(usr_jsonpath)
     datastorage.add_entry(timestamp, stats)
 

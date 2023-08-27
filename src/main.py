@@ -55,3 +55,7 @@ def parse_respone(respone:str):
     respone = re.sub(r'\*(.*?)\*', r'<i>\1</i>', respone)
     print(respone)
     return respone
+
+def remove_all_in(path):
+    for file in os.listdir(path):
+        os.remove(path + "/" + file)

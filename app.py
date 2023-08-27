@@ -1,6 +1,9 @@
 import json
+import os
+
 from src import main
 from src import gtts
+
 
 TESTING = False
 if TESTING:
@@ -86,6 +89,9 @@ def handle_prompt():
 
 @app.route('/handle_innit')
 def call_back_innit():
+
+    main.remove_all_in("static/audio")
+
     global last_msg
 
     if not "name" in request.args:
@@ -109,9 +115,14 @@ def handle_tts():
 
     speak = backend.getTTSString(last_msg)
     gender = "male"
-    print("\n ======= in to tts\n", lang, gender, speak)
-    tts = gtts.synthesise(speak, lang, gender)
-    return "done"
+
+    if "num" in request.args:
+        print("\n ======= in to tts with num \n", lang, gender, speak)
+        return gtts.synthesise(speak, lang, gender, request.args['num'])
+    else:
+        print("\n ======= in to tts\n", lang, gender, speak)
+        return gtts.synthesise(speak, lang, gender)
+
 
 
 if __name__ == "__main__":

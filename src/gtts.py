@@ -40,7 +40,7 @@ language_voices = {
     "vietnamese" : ["vi-VN", "vi-VN-Neural2-A", "vi-VN-Neural2-D"]
 }
 
-def synthesise(input, language, gender):
+def synthesise(input, language, gender, num: int = None):
     # Instantiates a client
     client = texttospeech.TextToSpeechClient()
 
@@ -72,10 +72,21 @@ def synthesise(input, language, gender):
     )
 
     # The response's audio_content is binary.
-    with open("static/output.mp3", "wb") as out:
-        # Write the response to the output file.
-        out.write(response.audio_content)
+    if num is None:
+        f = open("static/audio/output.mp3", "wb")
         print('Audio content written to file "output.mp3"')
+    else:
+        f = open(f"static/audio/output{num}.mp3", "wb")
+        print(f'Audio content written to file "output{num}.mp3"')
+
+    f.write(response.audio_content)
+    f.close()
+
+    if num is None:
+        return "static/audio/output.mp3"
+    return f"static/audio/output{num}.mp3"
+
+
 
 def list_voices():
     """Lists the available voices."""
