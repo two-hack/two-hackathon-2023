@@ -178,12 +178,12 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     return assistant_reply
 
 def getTTSString(reply):
-
     pattern = r'>>>(.*?)<<<'
-    match = re.search(pattern, reply, re.DOTALL)
+    matches = list(re.finditer(pattern, reply, re.DOTALL))
 
-    if match:
-        TTSString = match.group(1).strip()
+    if matches:
+        last_match = matches[-1]
+        TTSString = last_match.group(1).strip()
     else:
         TTSString = " "
 
