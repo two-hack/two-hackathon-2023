@@ -10,6 +10,7 @@ import os
 
 #os.system('export GOOGLE_APPLICATION_CREDENTIALS="steam-treat-397115-d9246f5f8e7e.json"')
 #os.system('set GOOGLE_APPLICATION_CREDENTIALS="steam-treat-397115-d9246f5f8e7e.json"')
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "steam-treat-397115-d9246f5f8e7e.json"
 
 language_voices = {
     "arabic" : ["ar-XA", "ar-XA-Wavenet-A", "ar-XA-Wavenet-C"],
@@ -55,7 +56,7 @@ def synthesise(input, language, gender, num: int = None):
         name = language_voices[language.lower()][2]
     else:
         ssml_gender = texttospeech.SsmlVoiceGender.FEMALE
-        language_voices[language.lower()][1]
+        name = language_voices[language.lower()][1]
     voice = texttospeech.VoiceSelectionParams(
         language_code=language_voices[language.lower()][0], name=name, ssml_gender=ssml_gender
     )
