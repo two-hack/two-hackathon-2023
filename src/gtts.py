@@ -10,7 +10,7 @@ import os
 
 #os.system('export GOOGLE_APPLICATION_CREDENTIALS="steam-treat-397115-d9246f5f8e7e.json"')
 #os.system('set GOOGLE_APPLICATION_CREDENTIALS="steam-treat-397115-d9246f5f8e7e.json"')
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "steam-treat-397115-d9246f5f8e7e.json"
+#os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "steam-treat-397115-d9246f5f8e7e.json"
 
 language_voices = {
     "arabic" : ["ar-XA", "ar-XA-Wavenet-A", "ar-XA-Wavenet-C"],

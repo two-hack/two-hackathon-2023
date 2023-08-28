@@ -28,21 +28,18 @@ Once started, follow the link shown on the console and:
 4. End conversation after satisfied
 
 ## To use TTS:
-1. have to pip install google text to speech
-    `pip install --upgrade google-cloud-texttospeech`
-2. have to get json api key
-    from the google cloud site
-3. have to download google cloud cli
-    `curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
-    
-4. extract gcloud and install, as well as initialise, and login with credentials etc from the dir where u extracted from
-    `tar -xf google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
-    `./google-cloud-sdk/install.sh`
-    `./google-cloud-sdk/gcloud init`
-5. run google tts file in src/ or can import function with parameters (romanised text, language, gender)
 
+1. Make sure your google cloud account is setup with a service account.
+2. Install google cloud text to speech
+    `pip install --upgrade google-cloud-texttospeech`
+3. Download the google cloud cli and extract
+    `curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
+    `tar -xf google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
+4. Run the google cloud install script and also initialise gcloud and log in
+    `./google-cloud-sdk/bin/install.sh`
+    `./google-cloud-sdk/bin/gcloud init`
+5. Use google adc to set up Application Default Credentials and log in (if you do not want to download the json key manually and save as environment variable)
+    `./google-cloud-sdk/bin/gcloud auth application-default login`
 
 ### How it was implemented
 A Python back-end interacts with ChatGPT via the OpenAI API to create the language facilitator functionality. Text-to-speech is achieved via the Google Cloud TTS API. User data is stored locally using JSON files (in the full release, a web server will be hosted which will store this data). The front-end is built using Flask, JavaScript, HTML and CSS which provides an interface to interact with the application.
-
-
