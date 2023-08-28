@@ -10,7 +10,8 @@ header {
   color: white;
   text-align: center;
   padding: 20px;
-  border-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
@@ -113,7 +114,8 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
-  border-radius: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.2);
 }
 
