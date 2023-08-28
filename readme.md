@@ -5,7 +5,7 @@ Janulus is an AI-powered conversation app designed to help you become fluent in 
 
 Practice in conversation is one of the best ways to improve in a language. However, friends who speak that language won't always be available to practice with you, and beginners may feel nervous about making mistakes in front of someone else. This app aims to bridge that gap, by providing a stress-free environment where learners of all skill levels can engage in customisable conversations 24/7 while receiving instant tailored feedback.
 
-![Janulus Demo Video](https://youtu.be/--PJx-rJRX4?si=BK22z0MAEmUaJBgA)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/--PJx-rJRX4?si=77zM6oILDB8ZgH3o" title="Janulus Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Who is it for?
 People who want to practice conversations in a foreign language but cannot find another speaker of that language (or would like to practice in a stress-free environment)
