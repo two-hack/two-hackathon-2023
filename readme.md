@@ -31,22 +31,24 @@ Once started, follow the link shown on the console and:
 
 1. Make sure your google cloud account is setup with a service account.
 2. Install google cloud text to speech
-    `pip install --upgrade google-cloud-texttospeech`
-3. Download the google cloud cli:
-    https://cloud.google.com/sdk/docs/install-sdk
 
+   `pip install --upgrade google-cloud-texttospeech`
+4. Download the google cloud cli:
 
-    and extract
+   https://cloud.google.com/sdk/docs/install-sdk
+
+    OR
     `curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
     `tar -xf google-cloud-cli-444.0.0-linux-x86_64.tar.gz`
-4. Run the google cloud install script and also initialise gcloud and log in
+5. Run the google cloud install script and also initialise gcloud and log in
     `gcloud init`
 
     `./google-cloud-sdk/bin/install.sh`
     `./google-cloud-sdk/bin/gcloud init`
-5. Use google adc to set up Application Default Credentials and log in (if you do not want to download the json key manually and save as environment variable)
-    `gcloud auth application-default login`
+6. Use google adc to set up Application Default Credentials and log in (if you do not want to download the json key manually and save as environment variable)
 
+   `gcloud auth application-default login`
+OR
     `./google-cloud-sdk/bin/gcloud auth application-default login`
 
 ### How it was implemented
