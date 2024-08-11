@@ -1,9 +1,11 @@
 key.py
 output.mp3
-steam-treat-397115-d9246f5f8e7e.json
+steam-treat-397115*
 google-cloud-sdk/
 __pycache__/
 .venv
 google-cloud-cli-444.0.0-linux-x86_64.tar.gz
 .mp3
 testing.py
+users/*
+*graph.png
