@@ -2,6 +2,8 @@ import re
 import requests
 from key import KEY
 import userinfo
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import datetime
 import pickle
@@ -138,6 +140,7 @@ def make_initial_prompt(usr_jsonpath):
 
 
 def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
+    #print('prompt:', prompt)
 
     global CONV, conv_for_history
 
@@ -157,13 +160,13 @@ def chat_with_gpt(prompt, recordPrompt:bool=True, recordReply:bool=True):
     }
     data = {
         "messages": CONV,
-        "model": "gpt-4"
+        "model": "gpt-4o-mini"
     }
 
     response = requests.post(url, headers=headers, json=data)
     response_json = response.json()
 
-    # print(response_json)
+    print(response_json)
 
 
     # The structure of the response might have changed
@@ -286,7 +289,9 @@ def end(lastInput, username) -> str:
         plt.xticks(rotation=45)
         plt.tight_layout()
 
-        plt.savefig("static/images/graph.png".format(username))
+        plt.savefig("static/images/graph.png")
+        plt.savefig("users/{}/graph.png".format(username))
+        plt.close()
 
         # print(graph)
 
